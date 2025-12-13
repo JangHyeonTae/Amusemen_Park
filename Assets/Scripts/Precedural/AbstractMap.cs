@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class AbstractMap : MonoBehaviour
 {
     [SerializeField] protected MapVisualizer mapVisualizer = null;
-    [SerializeField] protected Vector2Int startPos = Vector2Int.zero;
+    [SerializeField] protected Vector3Int startPos = Vector3Int.zero;
 
     public void GenerateMap()
     {

@@ -3,16 +3,16 @@ using UnityEngine;
 
 public static class Algorithm
 {
-    public static HashSet<Vector2Int> SimpleRandomWalk(Vector2Int startPos, int walkLength)
+    public static HashSet<Vector3Int> SimpleRandomWalk(Vector3Int startPos, int walkLength)
     {
-        HashSet<Vector2Int> paths = new();
+        HashSet<Vector3Int> paths = new();
 
         paths.Add(startPos);
         var prevPos = startPos;
 
         for (int i = 0; i < walkLength; i++)
         {
-            var newPos = prevPos + Direction2D.GetRandomDir();
+            var newPos = prevPos + Direction3D.GetRandomDir();
             paths.Add(newPos);
             prevPos = newPos;
         }
@@ -22,18 +22,18 @@ public static class Algorithm
 
 
 
-public static class Direction2D
+public static class Direction3D
 {
     //¹æÇâ
-    public static List<Vector2Int> cardinalDirectionsList = new List<Vector2Int>
+    public static List<Vector3Int> cardinalDirectionsList = new List<Vector3Int>
     {
-        new Vector2Int(0,1), // Up
-        new Vector2Int(1,0), // Right
-        new Vector2Int(0,-1), // Down
-        new Vector2Int(-1,0) // Left
+        new Vector3Int(0,0,1), // Up
+        new Vector3Int(1,0,0), // Right
+        new Vector3Int(0,0,-1), // Down
+        new Vector3Int(-1,0,0) // Left
     };
 
-    public static Vector2Int GetRandomDir()
+    public static Vector3Int GetRandomDir()
     {
         return cardinalDirectionsList[Random.Range(0, cardinalDirectionsList.Count)];
     }

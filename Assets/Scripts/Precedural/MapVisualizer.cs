@@ -13,25 +13,27 @@ public class MapVisualizer : MonoBehaviour
     [SerializeField] private GameObject floorObj;
     [SerializeField] private GameObject wallObj;
 
+    public HashSet<Vector3Int> spawnedCells = new(); // 해당 cell에 접근해서 오브젝트 생성
 
-    public void OrderFloor(IEnumerable<Vector2Int> positions)
-    {
-        InstFloor(positions, floorTilemap, floorObj);
-    }
-
-    private void InstFloor(IEnumerable<Vector2Int> positions, Tilemap tilemap, GameObject inst)
+    public void OrderFloor(IEnumerable<Vector3Int> positions)
     {
         foreach (var pos in positions)
         {
-            InstSingleTile(tilemap, pos, inst);
+            InstSingleTile(floorTilemap, pos, floorObj);
         }
     }
 
-    private void InstSingleTile(Tilemap tilemap, Vector2Int pos, GameObject inst)
+    private void InstSingleTile(Tilemap tilemap, Vector3Int pos, GameObject inst)
     {
-        var tilePos = tilemap.WorldToCell((Vector3Int)pos);
-        GameObject obj = Instantiate(inst, tilePos,Quaternion.identity);
+        Vector3Int cellPos = new Vector3Int(pos.x, pos.z, 0);
+
+        if (!spawnedCells.Add(cellPos))
+            return;
+
+        Vector3 worldPos = tilemap.GetCellCenterWorld(cellPos);
+        GameObject obj = Instantiate(inst, worldPos, Quaternion.identity);
         obj.transform.parent = gameObject.transform;
+        
     }
 
     public void Clear()
@@ -39,14 +41,20 @@ public class MapVisualizer : MonoBehaviour
         floorTilemap.ClearAllTiles();
         wallTilemap.ClearAllTiles();
 
-        //ClearObj();
+        ClearObj();
+        spawnedCells.Clear();
     }
 
     public void ClearObj()
     {
-        for (int i = 0; i < gameObject.transform.childCount; i++)
+        for (int i = transform.childCount - 1; i >= 0; i--)
         {
-            Destroy(gameObject.transform.GetChild(i));
+            var child = transform.GetChild(i).gameObject;
+
+            if (UnityEngine.Application.isPlaying)
+                Destroy(child);
+            else
+                DestroyImmediate(child); 
         }
     }
 }

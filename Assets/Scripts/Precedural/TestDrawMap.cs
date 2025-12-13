@@ -12,19 +12,19 @@ public class TestDrawMap : AbstractMap
 
     protected override void RunProceduralGeneration()
     {
-        HashSet<Vector2Int> floorsPos = RunRandomWalk(startPos);
+        HashSet<Vector3Int> floorsPos = RunRandomWalk(startPos);
         mapVisualizer.Clear();
         mapVisualizer.OrderFloor(floorsPos);
     }
 
-    private HashSet<Vector2Int> RunRandomWalk(Vector2Int pos)
+    private HashSet<Vector3Int> RunRandomWalk(Vector3Int pos)
     {
         var currentPos = pos;
-        HashSet<Vector2Int> floorsPos = new HashSet<Vector2Int>();
+        HashSet<Vector3Int> floorsPos = new HashSet<Vector3Int>();
 
         for(int i =0; i < iterations; i++)
         {
-            var path = Algorithm.SimpleRandomWalk(pos, walkLength);
+            var path = Algorithm.SimpleRandomWalk(currentPos, walkLength);
             floorsPos.UnionWith(path);
 
             if (startRandomlyEachIteration)
@@ -32,6 +32,8 @@ public class TestDrawMap : AbstractMap
                 currentPos = floorsPos.ElementAt(UnityEngine.Random.Range(0, floorsPos.Count));
             }
         }
+
+
         return floorsPos;
     }
 }
