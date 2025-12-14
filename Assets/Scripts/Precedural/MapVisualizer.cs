@@ -26,8 +26,10 @@ public class MapVisualizer : MonoBehaviour
     {
         Vector3Int cellPos = new Vector3Int(pos.x, pos.y, 0);
 
-        if (!spawnedCells.Add(cellPos))
+        if (spawnedCells.Contains(cellPos))
             return;
+
+        spawnedCells.Add(cellPos);
 
         Vector3 worldPos = tilemap.GetCellCenterWorld(cellPos);
         GameObject obj = Instantiate(inst, worldPos, Quaternion.identity);

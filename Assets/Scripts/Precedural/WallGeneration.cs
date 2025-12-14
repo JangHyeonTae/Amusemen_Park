@@ -25,11 +25,11 @@ public static class WallGeneration
     {
         HashSet<Vector3Int> wallPos = new HashSet<Vector3Int>();
 
-        foreach (var pos in wallPos)
+        foreach (var pos in floorsPos)
         {
             foreach (var dir in directionList)
             {
-                var neighborPos = pos + (Vector3Int)dir;
+                var neighborPos = pos + dir;
 
                 if (!floorsPos.Contains(neighborPos))
                 {
