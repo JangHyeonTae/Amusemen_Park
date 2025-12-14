@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
-using UnityEngine.WSA;
 
 public class MapVisualizer : MonoBehaviour
 {
     [SerializeField] private Tilemap floorTilemap;
     [SerializeField] private Tilemap wallTilemap;
 
-    [SerializeField] private GameObject floorObj;
-    [SerializeField] private GameObject wallObj;
+    [SerializeField] private GameObject tileObj;
+    [SerializeField] private GameObject wallUp, wallDown, wallLeft, wallRigjt;
 
     public HashSet<Vector3Int> spawnedCells = new(); // 해당 cell에 접근해서 오브젝트 생성
 
@@ -19,13 +18,13 @@ public class MapVisualizer : MonoBehaviour
     {
         foreach (var pos in positions)
         {
-            InstSingleTile(floorTilemap, pos, floorObj);
+            InstSingleTile(floorTilemap, pos, tileObj);
         }
     }
 
     private void InstSingleTile(Tilemap tilemap, Vector3Int pos, GameObject inst)
     {
-        Vector3Int cellPos = new Vector3Int(pos.x, pos.z, 0);
+        Vector3Int cellPos = new Vector3Int(pos.x, pos.y, 0);
 
         if (!spawnedCells.Add(cellPos))
             return;
@@ -35,6 +34,16 @@ public class MapVisualizer : MonoBehaviour
         obj.transform.parent = gameObject.transform;
         
     }
+
+    public void InstSingleBasicWall(Vector3Int pos)
+    {
+        if (wallUp != null)
+            InstSingleTile(wallTilemap, pos, wallUp);
+        else
+            Debug.Log("null");
+    }
+
+
 
     public void Clear()
     {

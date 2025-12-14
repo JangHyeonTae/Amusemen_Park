@@ -15,6 +15,8 @@ public class TestDrawMap : AbstractMap
         HashSet<Vector3Int> floorsPos = RunRandomWalk(startPos);
         mapVisualizer.Clear();
         mapVisualizer.OrderFloor(floorsPos);
+
+        WallGeneration.CreateWall(floorsPos, mapVisualizer);
     }
 
     private HashSet<Vector3Int> RunRandomWalk(Vector3Int pos)

@@ -27,10 +27,10 @@ public static class Direction3D
     //πÊ«‚
     public static List<Vector3Int> cardinalDirectionsList = new List<Vector3Int>
     {
-        new Vector3Int(0,0,1), // Up
-        new Vector3Int(1,0,0), // Right
-        new Vector3Int(0,0,-1), // Down
-        new Vector3Int(-1,0,0) // Left
+        new Vector3Int(0,1), // Up
+        new Vector3Int(1,0), // Right
+        new Vector3Int(0,-1), // Down
+        new Vector3Int(-1,0) // Left
     };
 
     public static Vector3Int GetRandomDir()
