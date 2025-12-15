@@ -76,7 +76,7 @@ public class RoomGenerator : SampleMap
         for(int i =0; i < roomsList.Count; i++)
         {
             var roomBounds = roomsList[i];
-            var roomCenter = new Vector3Int(Mathf.RoundToInt(roomBounds.center.x), Mathf.RoundToInt(roomBounds.center.z));
+            var roomCenter = new Vector3Int(Mathf.RoundToInt(roomBounds.center.x), Mathf.RoundToInt(roomBounds.center.y));
             var roomFloor = RunRandomWalk(so, roomCenter);
 
             foreach (var pos in roomFloor)
@@ -139,15 +139,15 @@ public class RoomGenerator : SampleMap
         var pos = currentRoomCenter;
         corridor.Add(pos);
 
-        while (pos.z != destination.z)
+        while (pos.y != destination.y)
         {
-            if (destination.z > pos.z)
+            if (destination.y > pos.y)
             {
-                pos += Vector3Int.forward;
+                pos += Vector3Int.up;
             }
-            else if(destination.z< pos.z)
+            else if(destination.y< pos.y)
             {
-                pos += Vector3Int.back;
+                pos += Vector3Int.down;
             }
             corridor.Add(pos);
         }
