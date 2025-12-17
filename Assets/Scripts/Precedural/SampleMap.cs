@@ -12,6 +12,7 @@ public class SampleMap : AbstractMap
     protected override void RunProceduralGeneration()
     {
         HashSet<Vector3Int> floorsPos = RunRandomWalk(so, startPos);
+
         mapVisualizer.Clear();
         mapVisualizer.OrderFloor(floorsPos);
 
@@ -37,5 +38,21 @@ public class SampleMap : AbstractMap
 
 
         return floorsPos;
+    }
+
+    protected void DestroyItem()
+    {
+        for (int i = itemParent.childCount - 1; i >= 0; i--)
+        {
+            if (itemParent.childCount <= 0)
+                break;
+
+            var child = itemParent.GetChild(i).gameObject;
+
+            if (UnityEngine.Application.isPlaying)
+                Destroy(child);
+            else
+                DestroyImmediate(child);
+        }
     }
 }

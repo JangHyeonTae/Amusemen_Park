@@ -23,12 +23,7 @@ public static class InstItem
             }
         }
         
-        foreach(var a in itemPos)
-        {
-            Debug.Log(a);
-        }
-
-        return itemPosDic[roomIndex];
+        return itemPos;
     }
 
     public static void AddItemPosDic(int roomIndex, HashSet<Vector3Int> posHash)

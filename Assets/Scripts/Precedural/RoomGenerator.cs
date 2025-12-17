@@ -18,6 +18,7 @@ public class RoomGenerator : SampleMap
 
     protected override void RunProceduralGeneration()
     {
+        DestroyItem();
         CreateRooms();
     }
 
