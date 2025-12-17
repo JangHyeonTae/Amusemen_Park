@@ -10,4 +10,5 @@ public class Item : ScriptableObject
     [field: SerializeField] public bool canUse { get; private set; }
     [field: SerializeField] public int cost { get; private set; }
     [field: SerializeField] public EMoney moneyType { get; private set; }
+    [field: SerializeField] public GameObject itemVisual {  get; private set; }
 }

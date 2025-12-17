@@ -8,6 +8,7 @@ using UnityEngine.WSA;
 
 public class MapVisualizer : MonoBehaviour
 {
+    [SerializeField] private Grid tileGrid;
     [SerializeField] private Tilemap floorTilemap;
     [SerializeField] private Tilemap wallTilemap;
 
@@ -24,6 +25,7 @@ public class MapVisualizer : MonoBehaviour
         {
             InstSingleTile(floorTilemap, pos, tileObj);
         }
+
     }
 
     private void InstSingleTile(Tilemap tilemap, Vector3Int pos, GameObject inst)
@@ -137,5 +139,10 @@ public class MapVisualizer : MonoBehaviour
             else
                 DestroyImmediate(child); 
         }
+    }
+
+    public Vector3 GridSize()
+    {
+        return tileGrid.cellSize;
     }
 }

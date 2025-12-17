@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RoomGenerator : SampleMap
@@ -12,6 +13,8 @@ public class RoomGenerator : SampleMap
 
     [SerializeField][Range(0, 10)] private int offset = 1;
     [SerializeField] private bool randomWalkRooms = false;
+
+    private List<Vector3Int> posList = new();
 
     protected override void RunProceduralGeneration()
     {
@@ -54,16 +57,18 @@ public class RoomGenerator : SampleMap
     {
         HashSet<Vector3Int> floor = new HashSet<Vector3Int>();
 
-        foreach (var room in roomsList)
+        for(int i =0; i < roomsList.Count; i++)
         {
-            for (int col = offset; col < room.size.x - offset; col++)
+            for (int col = offset; col < roomsList[i].size.x - offset; col++)
             {
-                for (int row = offset; row < room.size.y - offset; row++)
+                for (int row = offset; row < roomsList[i].size.y - offset; row++)
                 {
-                    Vector3Int pos = (Vector3Int)room.min + new Vector3Int(col, row);
+                    Vector3Int pos = (Vector3Int)roomsList[i].min + new Vector3Int(col, row);
                     floor.Add(pos);
                 }
             }
+
+            InstItem.AddItemPosDic(i, floor);
         }
 
         return floor;
@@ -89,6 +94,22 @@ public class RoomGenerator : SampleMap
                     floor.Add(pos);
                 }
             }
+
+
+            InstItem.AddItemPosDic(i, floor);
+
+            posList.Clear();
+            posList = InstItem.InstItemGenerator(i, so);
+
+            for (int index = 0; index < so.maxItemCount; index++)
+            {
+                obj = Instantiate(sampleItem);
+                obj.transform.parent = itemParent;
+                obj.Init(itemSO, obj.transform);
+                obj.transform.position = new Vector3Int(posList[index].x * (int)mapVisualizer.GridSize().x, 0,
+                    posList[index].y * (int)mapVisualizer.GridSize().y);
+            }
+            
         }
 
         return floor;

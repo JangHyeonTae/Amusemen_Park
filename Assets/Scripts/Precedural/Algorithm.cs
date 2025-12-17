@@ -79,8 +79,10 @@ public static class Algorithm
                 }
             }
         }
+
         return roomsList;
     }
+
 
     private static void SplitVerical(int minWidth, Queue<BoundsInt> roomsQueue, BoundsInt room)
     {

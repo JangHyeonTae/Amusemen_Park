@@ -7,6 +7,7 @@ using UnityEngine;
 public class SampleMap : AbstractMap
 {
     [SerializeField] protected RandomWalkSO so;
+    [SerializeField] protected Transform itemParent;
 
     protected override void RunProceduralGeneration()
     {
@@ -26,6 +27,7 @@ public class SampleMap : AbstractMap
         {
             var path = Algorithm.SimpleRandomWalk(currentPos, so.walkLength);
             floorsPos.UnionWith(path);
+
 
             if (so.startRandomlyEachIteration)
             {
