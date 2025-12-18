@@ -12,25 +12,48 @@ public class MapVisualizer : MonoBehaviour
     [SerializeField] private Tilemap floorTilemap;
     [SerializeField] private Tilemap wallTilemap;
 
+    private Transform roofTrans;
     [SerializeField] private GameObject tileObj;
+
     [SerializeField] private GameObject wallTop, wallBottom, wallSideLeft, wallSideRight, wallFull,
         wallInnerCornerDownLeft, wallInnerCornerDownRight, wallDiagonalCornerDownRight,
         wallDiagonalCornerDownLeft, wallDiagonalCornerUpRight, wallDiagonalCornerUpLeft;
 
+    
     public HashSet<Vector3Int> spawnedCells = new(); // 해당 cell에 접근해서 오브젝트 생성
 
     public void OrderFloor(IEnumerable<Vector3Int> positions)
     {
+        HashSet<Vector3Int> roofPos = new();
+        roofTrans = FindChildByName(wallTop.transform, "Roof");
+
+        Vector3 baseWorld = wallTop.transform.position;
+        Vector3 roofWorld = roofTrans.position;
+
+        Vector3Int roofVec = tileGrid.WorldToCell(roofWorld) - tileGrid.WorldToCell(baseWorld);
+
         foreach (var pos in positions)
         {
+            roofPos.Add(pos);
             InstSingleTile(floorTilemap, pos, tileObj);
+            InstSingleTile(floorTilemap, pos + roofVec, tileObj);
         }
 
     }
 
+    Transform FindChildByName(Transform root, string targetName, bool includeInactive = true)
+    {
+        foreach (var t in root.GetComponentsInChildren<Transform>(includeInactive))
+        {
+            if (t.name == targetName)
+                return t;
+        }
+        return null;
+    }
+
     private void InstSingleTile(Tilemap tilemap, Vector3Int pos, GameObject inst)
     {
-        Vector3Int cellPos = new Vector3Int(pos.x, pos.y, 0);
+        Vector3Int cellPos = new Vector3Int(pos.x, pos.y, pos.z);
 
         if (spawnedCells.Contains(cellPos))
             return;
@@ -38,9 +61,10 @@ public class MapVisualizer : MonoBehaviour
         spawnedCells.Add(cellPos);
 
         Vector3 worldPos = tilemap.GetCellCenterWorld(cellPos);
-        GameObject obj = Instantiate(inst, worldPos, Quaternion.identity);
-        obj.transform.parent = gameObject.transform;
+
         
+        GameObject obj = Instantiate(inst, worldPos, Quaternion.identity, transform);
+
     }
 
     public void InstSingleBasicWall(Vector3Int pos, string binaryType)

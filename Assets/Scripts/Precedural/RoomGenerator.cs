@@ -69,7 +69,7 @@ public class RoomGenerator : SampleMap
                 }
             }
 
-            InstItem.AddItemPosDic(i, floor);
+            ExtractFloor.AddItemPosDic(i, floor);
         }
 
         return floor;
@@ -97,10 +97,10 @@ public class RoomGenerator : SampleMap
             }
 
 
-            InstItem.AddItemPosDic(i, floor);
+            ExtractFloor.AddItemPosDic(i, floor);
 
             posList.Clear();
-            posList = InstItem.InstItemGenerator(i, so);
+            posList = ExtractFloor.InstItemGenerator(i, so);
 
             for (int index = 0; index < so.maxItemCount; index++)
             {
