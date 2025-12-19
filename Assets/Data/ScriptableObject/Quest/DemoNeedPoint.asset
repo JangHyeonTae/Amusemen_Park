@@ -10,7 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b795e6126a864d44a93d48c87c33de4b, type: 3}
-  m_Name: DemoQuest
+  m_Name: DemoNeedPoint
   m_EditorClassIdentifier: 
-  <startNeedCount>k__BackingField: 1
+  <questName>k__BackingField: NeedPoints
+  <questType>k__BackingField: 1
+  <startNeedCount>k__BackingField: 10
   <upCount>k__BackingField: 2

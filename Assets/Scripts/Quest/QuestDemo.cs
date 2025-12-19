@@ -1,35 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class QuestDemo : MonoBehaviour
 {
-    public QuestSO questSO;
+    public QuestSO needPointQuestSO;
+    public QuestSO EnemyQuestSO;
 
-    public Button addButton;
-    public Button finishQuest;
+    public Button NeedPointQuestAddButton;
+    public Button EnemyQuestAddButton;
+    public Button needPointFinishQuest;
+    public Button enemyfinishQuest;
+    public Button countUp;
+
+    public TextMeshProUGUI questText;
+    public TextMeshProUGUI questNeedCount;
+    public TextMeshProUGUI questCountText;
 
     private void OnEnable()
     {
-        addButton.onClick.AddListener(QuestSetting);
-        finishQuest.onClick.AddListener(QuestFaild);
+        countUp.onClick.AddListener(QuestContinue);
+        NeedPointQuestAddButton.onClick.AddListener(() => QuestSetting(needPointQuestSO));
+        EnemyQuestAddButton.onClick.AddListener(() => QuestSetting(EnemyQuestSO));
+        needPointFinishQuest.onClick.AddListener(() => QuestFaild(needPointQuestSO));
+        enemyfinishQuest.onClick.AddListener(() => QuestFaild(EnemyQuestSO));
     }
 
     private void OnDisable()
     {
-        addButton.onClick.RemoveListener(QuestSetting);
-        finishQuest.onClick.RemoveListener(QuestFaild);
+        countUp.onClick.RemoveListener(QuestContinue);
+        NeedPointQuestAddButton.onClick.RemoveListener(() => QuestSetting(needPointQuestSO));
+        EnemyQuestAddButton.onClick.RemoveListener(() => QuestSetting(EnemyQuestSO));
+        needPointFinishQuest.onClick.RemoveListener(() => QuestFaild(needPointQuestSO));
+        enemyfinishQuest.onClick.RemoveListener(() => QuestFaild(EnemyQuestSO));
     }
 
-    public void QuestSetting()
+    public void QuestContinue()
     {
-        QuestManager.Instance.SpawnQuest(questSO);
+        QuestManager.Instance.QuestCountUp();
+        questCountText.text = InventoryManager.Instance.myNormalPoint.ToString();
     }
 
-    public void QuestFaild()
+    public void QuestSetting(QuestSO so)
     {
-        if (QuestManager.Instance.QuestFinish(questSO))
+        QuestManager.Instance.SpawnQuest(so);
+        questText.text = so.questName;
+        questNeedCount.text = so.startNeedCount.ToString();
+    }
+
+    public void QuestFaild(QuestSO so)
+    {
+        if (QuestManager.Instance.QuestFinish(so))
         {
             Debug.Log("¼º°ø");
         }

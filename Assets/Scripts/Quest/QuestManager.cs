@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +15,22 @@ public class QuestManager : Singleton<QuestManager>
 {
     public List<QuestSample> questList;
 
+
+    public void QuestCountUp()
+    {
+        InventoryManager.Instance.myNormalPoint++;
+    }
+
     public bool QuestFinish(QuestSO so)
     {
         if (questList == null)
             return false;
 
-        var quest = questList.Find(q => q.quest == so.quest);
+        var quest = questList.Find(q => q.quest == so.questType);
 
         if(quest != null)
         {
-            if (quest.questSO.quest == Quest.NeedPoint)
+            if (quest.questSO.questType == Quest.NeedPoint)
             {
                 if (quest.questNeedCount <= InventoryManager.Instance.myNormalPoint)
                 {

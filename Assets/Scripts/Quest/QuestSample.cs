@@ -13,6 +13,7 @@ public class QuestSample
     {
         questSO = so;
         questNeedCount = so.startNeedCount;
+        quest = so.questType;
     }
 
     public void UpQuestCount()
