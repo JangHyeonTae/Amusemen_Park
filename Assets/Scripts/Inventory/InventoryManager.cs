@@ -6,14 +6,14 @@ using UnityEngine;
 
 public enum EMoney
 {
-    questMoney,
-    normalMoney
+    questPoint,
+    normalPoint
 }
 
 public class InventoryManager : Singleton<InventoryManager>
 {
-    public int questMoney = 0;
-    public int normalMoney = 0;
+    public int myQuestPoint = 0;
+    public int myNormalPoint = 0;
     public Dictionary<Item, int> itemDic;
 
     protected void Awake()

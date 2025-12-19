@@ -30,13 +30,13 @@ public class SampleItem : MonoBehaviour, ISell
 
     public void Sell(Item item)
     {
-        if(item.moneyType == EMoney.questMoney)
+        if(item.moneyType == EMoney.questPoint)
         {
-            InventoryManager.Instance.questMoney += item.cost;
+            InventoryManager.Instance.myQuestPoint += item.cost;
         }
         else
         {
-            InventoryManager.Instance.normalMoney += item.cost;
+            InventoryManager.Instance.myNormalPoint += item.cost;
         }
     }
 
