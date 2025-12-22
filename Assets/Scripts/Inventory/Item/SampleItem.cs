@@ -8,11 +8,11 @@ public class SampleItem : MonoBehaviour, ISell
     private Item itemSO;
     private GameObject obj;
 
-    public void Init(Item item, Transform parent)
+    public void Init(Item item)
     {
         itemSO = item;
         obj = Instantiate(itemSO.itemVisual);
-        obj.transform.parent = parent;
+        obj.transform.parent = this.transform;
     }
 
     public void GetItem(Item item)

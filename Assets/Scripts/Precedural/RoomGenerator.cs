@@ -106,12 +106,16 @@ public class RoomGenerator : SampleMap
             {
                 SampleItem inst = Instantiate(obj);
                 inst.transform.parent = itemParent;
-                inst.Init(itemSO, obj.transform);
-
+                inst.Init(itemSO);
+                
                 inst.transform.position = new Vector3Int(posList[index].x * (int)mapVisualizer.GridSize().x, 0,
                                 posList[index].y * (int)mapVisualizer.GridSize().y);
             }
 
+        }
+        if (GameSystemManager.Instance == null)
+        {
+            Debug.Log("GameSystemManager없음");
         }
 
         GameSystemManager.Instance.mapStartPos = PosSet(posList, UnityEngine.Random.Range(0,(int)(posList.Count)/2));
@@ -122,14 +126,15 @@ public class RoomGenerator : SampleMap
 
     private Vector3Int PosSet( List<Vector3Int> posList, int index)
     {
-        Transform inst = null;
-        inst.position = new Vector3Int(posList[index].x * (int)mapVisualizer.GridSize().x, 0,
+        if (posList == null || posList.Count == 0)
+        {
+            Debug.LogWarning("PosSet: posList가 비었음");
+            return Vector3Int.zero;
+        }
+
+        return new Vector3Int(posList[index].x * (int)mapVisualizer.GridSize().x, 0,
                         posList[index].y * (int)mapVisualizer.GridSize().y);
         
-
-        Vector3Int pos = Vector3Int.RoundToInt(inst.transform.position);
-
-        return pos;
     }
 
     private HashSet<Vector3Int> ConnectRooms(List<Vector3Int> roomCenters)

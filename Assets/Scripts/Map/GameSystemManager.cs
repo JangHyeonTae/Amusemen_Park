@@ -11,6 +11,7 @@ public class GameSystemManager : Singleton<GameSystemManager>
     public Vector3Int mapStartPos;
 
     [SerializeField] private StartEndObj startObj;
+    [SerializeField] private StartEndObj endObj;
     AbstractMap generator;
 
     protected override void Awake()
@@ -22,11 +23,14 @@ public class GameSystemManager : Singleton<GameSystemManager>
 
     private void Start()
     {
-        startPos = new Vector3Int(3, 0, 3);
-        StartEndObj inst = Instantiate(startObj);
-        inst.transform.position = startPos;
 
         generator.GenerateMap();
+
+        startPos = new Vector3Int(3, 0, 3);
+
+        StartEndObj inst = Instantiate(startObj, startPos, Quaternion.identity);
+        StartEndObj mapStartObj = Instantiate(startObj, mapStartPos, Quaternion.identity);
+        StartEndObj mapEndObj = Instantiate(endObj, mapEndPos, Quaternion.identity);
     }
 
     public void ChangeMap()
