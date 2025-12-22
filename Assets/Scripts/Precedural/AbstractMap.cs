@@ -8,8 +8,10 @@ public abstract class AbstractMap : MonoBehaviour
     [SerializeField] protected Vector3Int startPos = Vector3Int.zero;
 
     public SampleItem sampleItem;
+    [SerializeField] protected GameObject startSpawn;
+    [SerializeField] protected GameObject endSpawn;
     public Item itemSO;
-    protected SampleItem obj;
+    [SerializeField] protected SampleItem obj;
 
     public void GenerateMap()
     {

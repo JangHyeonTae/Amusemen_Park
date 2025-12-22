@@ -21,6 +21,11 @@ public class QuestManager : Singleton<QuestManager>
         InventoryManager.Instance.myNormalPoint++;
     }
 
+    public QuestSample CurrentQuest(int index)
+    {
+        return questList[index];
+    }
+
     public bool QuestFinish(QuestSO so)
     {
         if (questList == null)

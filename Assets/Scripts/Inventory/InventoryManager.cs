@@ -26,9 +26,13 @@ public class InventoryManager : Singleton<InventoryManager>
     private void Start()
     {
         itemDic = new();
-
-
     }
+
+    public int CurrentPoint()
+    {
+        return myNormalPoint;
+    }
+
     public void UseItem(Item item)
     {
         if (itemDic.ContainsKey(item))

@@ -24,7 +24,7 @@ public class SampleMap : AbstractMap
         var currentPos = pos;
         HashSet<Vector3Int> floorsPos = new HashSet<Vector3Int>();
 
-        for(int i =0; i < so.iterations; i++)
+        for(int i =0; i < so.iterations + GameSystemManager.Instance.currentStage; i++)
         {
             var path = Algorithm.SimpleRandomWalk(currentPos, so.walkLength);
             floorsPos.UnionWith(path);

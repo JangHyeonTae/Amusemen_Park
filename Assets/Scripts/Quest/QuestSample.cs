@@ -12,7 +12,7 @@ public class QuestSample
     public QuestSample(QuestSO so)
     {
         questSO = so;
-        questNeedCount = so.startNeedCount;
+        questNeedCount = so.startNeedCount * GameSystemManager.Instance.currentStage;
         quest = so.questType;
     }
 

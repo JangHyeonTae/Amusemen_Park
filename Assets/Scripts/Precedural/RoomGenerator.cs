@@ -104,18 +104,33 @@ public class RoomGenerator : SampleMap
 
             for (int index = 0; index < so.maxItemCount; index++)
             {
-                obj = Instantiate(sampleItem);
-                obj.transform.parent = itemParent;
-                obj.Init(itemSO, obj.transform);
-                obj.transform.position = new Vector3Int(posList[index].x * (int)mapVisualizer.GridSize().x, 0,
-                    posList[index].y * (int)mapVisualizer.GridSize().y);
+                SampleItem inst = Instantiate(obj);
+                inst.transform.parent = itemParent;
+                inst.Init(itemSO, obj.transform);
+
+                inst.transform.position = new Vector3Int(posList[index].x * (int)mapVisualizer.GridSize().x, 0,
+                                posList[index].y * (int)mapVisualizer.GridSize().y);
             }
-            
+
         }
+
+        GameSystemManager.Instance.mapStartPos = PosSet(posList, UnityEngine.Random.Range(0,(int)(posList.Count)/2));
+        GameSystemManager.Instance.mapEndPos = PosSet(posList, UnityEngine.Random.Range((int)(posList.Count - 1) / 2, posList.Count));
 
         return floor;
     }
 
+    private Vector3Int PosSet( List<Vector3Int> posList, int index)
+    {
+        Transform inst = null;
+        inst.position = new Vector3Int(posList[index].x * (int)mapVisualizer.GridSize().x, 0,
+                        posList[index].y * (int)mapVisualizer.GridSize().y);
+        
+
+        Vector3Int pos = Vector3Int.RoundToInt(inst.transform.position);
+
+        return pos;
+    }
 
     private HashSet<Vector3Int> ConnectRooms(List<Vector3Int> roomCenters)
     {
