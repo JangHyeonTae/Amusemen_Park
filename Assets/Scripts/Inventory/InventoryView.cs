@@ -12,4 +12,9 @@ public class InventoryView : MonoBehaviour
     {
         
     }
+
+    private void ReSpawnIventory()
+    {
+
+    }
 }

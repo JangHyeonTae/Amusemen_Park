@@ -20,7 +20,6 @@ public class InventoryManager : Singleton<InventoryManager>
     {
         base.Awake();
 
-        //파이어베이스 연동
     }
 
     private void Start()
