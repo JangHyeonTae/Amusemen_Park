@@ -8,7 +8,7 @@ public class PopUpManager : Singleton<PopUpManager>
     [SerializeField] private PopupPanel popupPanel;
 
 
-    public void ShowPopup(string message)
+    public void ShowPopup(string message, Vector3 pos)
     {
         if (popupPanel == null)
         {
@@ -16,6 +16,7 @@ public class PopUpManager : Singleton<PopUpManager>
         }
 
         popupPanel.ShowPopUp(message);
+        popupPanel.transform.position = pos;
     }
 
     public void HidePopUP()

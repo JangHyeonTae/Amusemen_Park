@@ -59,4 +59,6 @@ public class InventoryManager : Singleton<InventoryManager>
             itemDic.Add(item, 1);
         }
     }
+
+    
 }

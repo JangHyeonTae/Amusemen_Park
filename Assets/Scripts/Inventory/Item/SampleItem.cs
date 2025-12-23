@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SampleItem : MonoBehaviour, ISell
+public class SampleItem : PooledObject, ISell
 {
     // 테스트용 public
     private Item itemSO;
