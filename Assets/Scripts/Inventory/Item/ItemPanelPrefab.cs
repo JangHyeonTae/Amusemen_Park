@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,20 +7,24 @@ using UnityEngine.UI;
 public class ItemPanelPrefab : PooledObject
 {
     private Item itemSO;
-    private SampleItem sampleItem;
     [SerializeField] private Image toolImage;
     [SerializeField] private Button showTool;
     [SerializeField] private Button sellButton;
     [SerializeField] private Button useButton;
 
-    private bool value;
+    private bool toolValue;
+    public bool ToolValue { get { return toolValue; } set { toolValue = value; OnTool?.Invoke(toolValue); } }
+    public Action<bool> OnTool;
     
-    public void Init(SampleItem sampleItem)
+    public void Init(Item itemSO)
     {
-        this.itemSO = sampleItem.itemSO;
+        ToolValue = false;
+        this.itemSO = itemSO;
         showTool.onClick.AddListener(ShowTool);
         sellButton.onClick.AddListener(SellItem);
         useButton.onClick.AddListener(UseItem);
+
+        OnTool += ShowSet;
     }
 
 
@@ -33,25 +38,28 @@ public class ItemPanelPrefab : PooledObject
         sellButton.onClick.RemoveListener(SellItem);
         useButton.onClick.RemoveListener(UseItem);
         toolImage.gameObject.SetActive(false);
+
+        OnTool -= ShowSet;
     }
 
+    private void ShowSet(bool value)
+    {
+        toolImage.gameObject.SetActive(value);
+    }
 
     private void ShowTool()
     {
-        value = !value;
-        toolImage.gameObject.SetActive(value);
+        ToolValue = !ToolValue;
     }
 
     private void SellItem()
     {
-        InventoryManager.Instance.UseItem(sampleItem);
-        sampleItem.Sell(sampleItem.itemSO);
+        InventoryManager.Instance.UseItem(itemSO);
     }
 
     private void UseItem()
     {
-        InventoryManager.Instance.UseItem(sampleItem);
-        sampleItem.Use(sampleItem.itemSO);
+        InventoryManager.Instance.UseItem(itemSO);
         
     }
 }

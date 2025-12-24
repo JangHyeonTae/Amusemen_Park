@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StartEndObj : MonoBehaviour
+public class PressFObj : MonoBehaviour
 {
     public bool isStart;
 
     private Transform playerTr;
     private bool canInteract;
+    private SampleItem sampleItem;
+    private void Awake()
+    {
+        sampleItem = GetComponent<SampleItem>();
+    }
+
 
     private void Update()
     {
@@ -15,17 +21,25 @@ public class StartEndObj : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            if (isStart)
+            if (sampleItem == null)
             {
-                Vector3 target = GameSystemManager.Instance.mapStartPos;
-                target.y = playerTr.position.y;
+                if (isStart)
+                {
+                    Vector3 target = GameSystemManager.Instance.mapStartPos;
+                    target.y = playerTr.position.y;
 
-                TeleportPlayer(playerTr, target);
+                    TeleportPlayer(playerTr, target);
+                }
+                else
+                {
+                    GameSystemManager.Instance.MapClear();
+                }
             }
             else
             {
-                GameSystemManager.Instance.MapClear();
+                sampleItem.GetItem();
             }
+            
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -42,6 +56,7 @@ public class StartEndObj : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            canInteract = false;
             PopUpManager.Instance.HidePopUP();
         }
     }

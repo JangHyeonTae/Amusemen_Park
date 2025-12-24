@@ -10,8 +10,8 @@ public class GameSystemManager : Singleton<GameSystemManager>
     public Vector3Int mapEndPos;
     public Vector3Int mapStartPos;
 
-    [SerializeField] private StartEndObj startObj;
-    [SerializeField] private StartEndObj endObj;
+    [SerializeField] private PressFObj startObj;
+    [SerializeField] private PressFObj endObj;
     AbstractMap generator;
 
     protected override void Awake()
@@ -27,9 +27,9 @@ public class GameSystemManager : Singleton<GameSystemManager>
 
         startPos = new Vector3Int(3, 0, 3);
 
-        StartEndObj inst = Instantiate(startObj, startPos, Quaternion.identity);
-        StartEndObj mapStartObj = Instantiate(startObj, mapStartPos, Quaternion.identity);
-        StartEndObj mapEndObj = Instantiate(endObj, mapEndPos, Quaternion.identity);
+        PressFObj inst = Instantiate(startObj, startPos, Quaternion.identity);
+        PressFObj mapStartObj = Instantiate(startObj, mapStartPos, Quaternion.identity);
+        PressFObj mapEndObj = Instantiate(endObj, mapEndPos, Quaternion.identity);
     }
 
     public void ChangeMap()

@@ -8,6 +8,11 @@ public class PopupPanel : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI messageText;
 
+    private void OnDisable()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void ShowPopUp(string message)
     {
         gameObject.SetActive(true);

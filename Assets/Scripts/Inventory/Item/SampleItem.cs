@@ -19,14 +19,16 @@ public class SampleItem : PooledObject, ISell
 
     public void GetItem()
     {
-        InventoryManager.Instance.AddItem(this);
+        PopUpManager.Instance.HidePopUP();
+        InventoryManager.Instance.AddItem(itemSO);
+        Destroy(gameObject);
     }
 
     public void Use(Item item)
     {
         if(item.canUse)
         {
-            InventoryManager.Instance.UseItem(this);
+            InventoryManager.Instance.UseItem(itemSO);
         }
     }
 

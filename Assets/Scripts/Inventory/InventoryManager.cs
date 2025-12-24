@@ -12,15 +12,17 @@ public enum EMoney
 
 public class InventoryManager : Singleton<InventoryManager>
 {
-    public Dictionary<SampleItem, int> itemDic;
-    public List<SampleItem> itemList;
+    public Dictionary<Item, int> itemDic;
+    public List<Item> itemList;
+
+    [SerializeField] private InventoryView inventoryView;
 
     public int myQuestPoint = 0;
     public int myNormalPoint = 0;
     private int currentWeight;
     private int maxWeight;
 
-    protected void Awake()
+    protected override void Awake()
     {
         base.Awake();
 
@@ -37,40 +39,41 @@ public class InventoryManager : Singleton<InventoryManager>
         return myNormalPoint;
     }
 
-    public void UseItem(SampleItem item)
+    public void UseItem(Item itemSO)
     {
-        if (itemDic.ContainsKey(item))
+        if (itemDic.ContainsKey(itemSO))
         {
-            if (itemDic[item] > 1)
+            if (itemDic[itemSO] > 1)
             {
-                itemDic[item] -= 1;
+                itemDic[itemSO] -= 1;
                 
             }
             else
             {
-                itemList.Remove(item);
-                itemDic.Remove(item);
+                itemList.Remove(itemSO);
+                itemDic.Remove(itemSO);
             }
 
-            currentWeight -= item.itemSO.weight;
+            currentWeight -= itemSO.weight;
         }
     }
 
-    public void AddItem(SampleItem item)
+    public void AddItem(Item itemSO)
     {
-        int bag = currentWeight + item.itemSO.weight;
-        if (bag <= maxWeight && itemDic.Count <= 15)
+        int bag = currentWeight + itemSO.weight;
+        if (bag <= maxWeight && itemDic.Count < 15)
         {
-            if (itemDic.ContainsKey(item))
+            if (itemDic.ContainsKey(itemSO))
             {
-                itemDic[item]++;
+                itemDic[itemSO]++;
+                Debug.Log(itemDic[itemSO]);
             }
             else
             {
-                itemList.Add(item);
-                itemDic.Add(item, 1);
+                itemList.Add(itemSO);
+                itemDic.Add(itemSO, 1);
             }
-            currentWeight += item.itemSO.weight;
+            currentWeight += itemSO.weight;
         }
         else
         {
@@ -78,5 +81,8 @@ public class InventoryManager : Singleton<InventoryManager>
         }
     }
 
-    
+    public void OpenInventory(bool value)
+    {
+        inventoryView.gameObject.SetActive(value);
+    }
 }
