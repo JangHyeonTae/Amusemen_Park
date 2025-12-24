@@ -23,7 +23,6 @@ public class GameSystemManager : Singleton<GameSystemManager>
 
     private void Start()
     {
-
         generator.GenerateMap();
 
         startPos = new Vector3Int(3, 0, 3);
