@@ -2,12 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomManager : Singleton<RoomManager>
+public class RoomManager
 {
-    protected void Awake()
-    {
-        base.Awake();
-        
-        
-    }
 }

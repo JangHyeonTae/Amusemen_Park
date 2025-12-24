@@ -12,9 +12,13 @@ public enum EMoney
 
 public class InventoryManager : Singleton<InventoryManager>
 {
+    public Dictionary<SampleItem, int> itemDic;
+    public List<SampleItem> itemList;
+
     public int myQuestPoint = 0;
     public int myNormalPoint = 0;
-    public Dictionary<Item, int> itemDic;
+    private int currentWeight;
+    private int maxWeight;
 
     protected void Awake()
     {
@@ -26,6 +30,7 @@ public class InventoryManager : Singleton<InventoryManager>
     private void Start()
     {
         itemDic = new();
+        itemList = new();
     }
 
     public int CurrentPoint()
@@ -33,30 +38,44 @@ public class InventoryManager : Singleton<InventoryManager>
         return myNormalPoint;
     }
 
-    public void UseItem(Item item)
+    public void UseItem(SampleItem item)
     {
         if (itemDic.ContainsKey(item))
         {
             if (itemDic[item] > 1)
             {
                 itemDic[item] -= 1;
+                
             }
             else
             {
+                itemList.Remove(item);
                 itemDic.Remove(item);
             }
+
+            currentWeight -= item.itemSO.weight;
         }
     }
 
-    public void AddItem(Item item)
+    public void AddItem(SampleItem item)
     {
-        if (itemDic.ContainsKey(item))
+        int bag = currentWeight + item.itemSO.weight;
+        if (bag <= maxWeight && itemDic.Count <= 15)
         {
-            itemDic[item]++;
+            if (itemDic.ContainsKey(item))
+            {
+                itemDic[item]++;
+            }
+            else
+            {
+                itemList.Add(item);
+                itemDic.Add(item, 1);
+            }
+            currentWeight += item.itemSO.weight;
         }
         else
         {
-            itemDic.Add(item, 1);
+            Debug.Log("Max Weight");
         }
     }
 

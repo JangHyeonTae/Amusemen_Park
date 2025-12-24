@@ -5,6 +5,7 @@ using UnityEngine;
 public class PoolManager : Singleton<PoolManager>
 {
     [SerializeField] private SampleItem sampleItem;
+    [SerializeField] private ItemPanelPrefab itemPanel;
     //private GameObject itemParent;
     ObjectPool pool;
 
