@@ -143,6 +143,18 @@ public static class Direction3D
         new Vector3Int(-1,1)
     };
 
+    public static List<Vector3Int> itemDirectionsList = new List<Vector3Int>
+    {
+        new Vector3Int(0,0,2), 
+        new Vector3Int(2,0,0), 
+        new Vector3Int(0,0,-2),
+        new Vector3Int(-2,0,0),
+        new Vector3Int(2,0,2),
+        new Vector3Int(2,0,-2),
+        new Vector3Int(-2,0,-2),
+        new Vector3Int(-2,0,2)
+    };
+
     public static Vector3Int GetRandomDir()
     {
         return cardinalDirectionsList[Random.Range(0, cardinalDirectionsList.Count)];

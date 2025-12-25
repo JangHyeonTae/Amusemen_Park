@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class RoomGenerator : SampleMap
@@ -78,12 +77,14 @@ public class RoomGenerator : SampleMap
     private HashSet<Vector3Int> CreateRoomsRandomly(List<BoundsInt> roomsList)
     {
         HashSet<Vector3Int> floor = new HashSet<Vector3Int>();
+        List<Vector3Int> intersectList = new List<Vector3Int>();
 
-        for(int i =0; i < roomsList.Count; i++)
+
+        for (int i =0; i < roomsList.Count; i++)
         {
             var roomBounds = roomsList[i];
             var roomCenter = new Vector3Int(Mathf.RoundToInt(roomBounds.center.x), Mathf.RoundToInt(roomBounds.center.y));
-            var roomFloor = RunRandomWalk(so, roomCenter);
+            var roomFloor = RunRandomWalk(randomWalkso, roomCenter);
 
             foreach (var pos in roomFloor)
             {
@@ -95,34 +96,44 @@ public class RoomGenerator : SampleMap
                     floor.Add(pos);
                 }
             }
-
+            
 
             ExtractFloor.AddItemPosDic(i, floor);
 
             posList.Clear();
-            posList = ExtractFloor.InstItemGenerator(i, so);
+            posList = ExtractFloor.InstItemGenerator(i, randomWalkso);
 
-            for (int index = 0; index < so.maxItemCount; index++)
+            intersectList = ExtractFloor.IntersectList(posList);
+
+            for (int index = 0; index < randomWalkso.maxItemCount; index++)
             {
-                SampleItem inst = Instantiate(obj);
-                inst.transform.parent = itemParent;
-                inst.Init(itemSO);
+                SampleItem inst = Instantiate(sampleItem);
+                inst.transform.SetParent(itemParent);
+                inst.Init(itemSO[UnityEngine.Random.Range(0, itemSO.Length)]);
                 
                 inst.transform.position = new Vector3Int(posList[index].x * (int)mapVisualizer.GridSize().x, 0,
                                 posList[index].y * (int)mapVisualizer.GridSize().y);
             }
 
         }
+
+
         if (GameSystemManager.Instance == null)
         {
             Debug.Log("GameSystemManager¾øÀ½");
         }
 
-        GameSystemManager.Instance.mapStartPos = PosSet(posList, UnityEngine.Random.Range(0,(int)(posList.Count)/2));
-        GameSystemManager.Instance.mapEndPos = PosSet(posList, UnityEngine.Random.Range((int)(posList.Count - 1) / 2, posList.Count));
+
+        Vector3Int SPos = PosSet(intersectList, UnityEngine.Random.Range(0, (int)(posList.Count) / 2));
+        Vector3Int EPos = PosSet(intersectList, UnityEngine.Random.Range((int)(posList.Count - 1) / 2, posList.Count));
+        
+
+        GameSystemManager.Instance.mapStartPos = SPos;
+        GameSystemManager.Instance.mapEndPos = EPos;
 
         return floor;
     }
+
 
     private Vector3Int PosSet( List<Vector3Int> posList, int index)
     {

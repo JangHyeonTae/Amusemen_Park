@@ -1,18 +1,25 @@
+using Invector.vCamera;
 using Invector.vCharacterController;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     private vThirdPersonController vController;
 
-    [SerializeField] private MonoBehaviour cameraController;
+    private vThirdPersonCamera cameraController;
 
     private bool isInventoryOpen;
     public bool IsInventoryOpen { get { return isInventoryOpen; } set { isInventoryOpen = value; OnInventoryOpen?.Invoke(isInventoryOpen); } }
     public Action<bool> OnInventoryOpen;
+
+    private void Awake()
+    {
+        cameraController = gameObject.GetComponentInChildren<vThirdPersonCamera>();
+    }
 
     private void OnEnable()
     {

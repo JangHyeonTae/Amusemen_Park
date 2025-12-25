@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class SampleMap : AbstractMap
 {
-    [SerializeField] protected RandomWalkSO so;
+    [SerializeField] protected RandomWalkSO randomWalkso;
     [SerializeField] protected Transform itemParent;
 
     protected override void RunProceduralGeneration()
     {
-        HashSet<Vector3Int> floorsPos = RunRandomWalk(so, startPos);
+        HashSet<Vector3Int> floorsPos = RunRandomWalk(randomWalkso, startPos);
 
         mapVisualizer.Clear();
         mapVisualizer.OrderFloor(floorsPos);

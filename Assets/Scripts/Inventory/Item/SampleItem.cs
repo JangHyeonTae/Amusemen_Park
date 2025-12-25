@@ -13,7 +13,11 @@ public class SampleItem : PooledObject, ISell
     {
         itemSO = item;
         obj = Instantiate(itemSO.itemVisual);
-        obj.transform.parent = this.transform;
+        obj.transform.SetParent(this.transform, false);
+
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localRotation = Quaternion.identity;
+
         price = (int)(GameSystemManager.Instance.currentStage * 0.1f * item.cost);
     }
 

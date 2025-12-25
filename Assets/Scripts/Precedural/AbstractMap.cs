@@ -7,9 +7,8 @@ public abstract class AbstractMap : MonoBehaviour
     [SerializeField] protected MapVisualizer mapVisualizer = null;
     [SerializeField] protected Vector3Int startPos = Vector3Int.zero;
 
-    public SampleItem sampleItem;
-    public Item itemSO;
-    [SerializeField] protected SampleItem obj;
+    [SerializeField] protected Item[] itemSO;
+    [SerializeField] protected SampleItem sampleItem;
 
     public void GenerateMap()
     {

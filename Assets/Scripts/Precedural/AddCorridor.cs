@@ -56,7 +56,7 @@ public class AddCorridor : SampleMap
 
         foreach(var roomPos in roomsToCreate)
         {
-            var roomFloor = RunRandomWalk(so, roomPos);
+            var roomFloor = RunRandomWalk(randomWalkso, roomPos);
             roomsPos.UnionWith(roomFloor);
         }
 

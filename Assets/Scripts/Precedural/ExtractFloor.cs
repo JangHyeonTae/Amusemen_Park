@@ -7,7 +7,7 @@ using UnityEngine;
 public static class ExtractFloor
 {
     public static Dictionary<int, List<Vector3Int>> roomFloorDataDic = new Dictionary<int, List<Vector3Int>>();
-    
+    public static List<Vector3Int> roomFloorDataList = new List<Vector3Int>();
 
     public static List<Vector3Int> InstItemGenerator(int roomIndex, RandomWalkSO so)
     {
@@ -35,9 +35,23 @@ public static class ExtractFloor
         foreach (var pos in posHash)
         {
             list.Add(pos);
+            roomFloorDataList.Add(pos);
         }
 
         roomFloorDataDic.Add(roomIndex, list);
+    }
+
+    public static List<Vector3Int> IntersectList(List<Vector3Int> list)
+    {
+        for(int i =0; i < list.Count; i++)
+        {
+            if (roomFloorDataList.Contains(list[i]))
+            {
+                roomFloorDataList.Remove(list[i]);
+            }
+        }
+
+        return roomFloorDataList;
     }
 
     public static void ClearItemPosDic()

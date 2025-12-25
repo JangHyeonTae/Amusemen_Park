@@ -19,8 +19,8 @@ public class InventoryManager : Singleton<InventoryManager>
 
     public int myQuestPoint = 0;
     public int myNormalPoint = 0;
-    private int currentWeight;
-    private int maxWeight;
+    public int currentWeight;
+    public int maxWeight = 15;
 
     protected override void Awake()
     {
