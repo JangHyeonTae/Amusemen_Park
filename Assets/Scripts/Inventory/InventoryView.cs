@@ -34,6 +34,7 @@ public class InventoryView : MonoBehaviour
         
     }
 
+
     public void ResetInventory()
     {
 

@@ -9,10 +9,10 @@ public class ItemPanelPrefab : PooledObject
 {
     private Item itemSO;
 
-    [SerializeField] private Image toolImage;
+    [SerializeField] private Image toolPopUp;
 
-    [SerializeField] private Button showTool;
-    [SerializeField] private Button sellButton;
+    [SerializeField] private Button ItemImageButton;
+    [SerializeField] private Button outButton;
     [SerializeField] private Button useButton;
 
     [SerializeField] private TextMeshProUGUI itemCountText;
@@ -28,8 +28,8 @@ public class ItemPanelPrefab : PooledObject
 
         itemCountText.text = itemCount.ToString();
 
-        showTool.onClick.AddListener(ShowTool);
-        sellButton.onClick.AddListener(SellItem);
+        ItemImageButton.onClick.AddListener(ShowTool);
+        outButton.onClick.AddListener(OutItem);
         useButton.onClick.AddListener(UseItem);
 
         OnTool += ShowSet;
@@ -43,17 +43,17 @@ public class ItemPanelPrefab : PooledObject
             this.itemSO = null;
         }
 
-        showTool.onClick.RemoveListener(ShowTool);
-        sellButton.onClick.RemoveListener(SellItem);
+        ItemImageButton.onClick.RemoveListener(ShowTool);
+        outButton.onClick.RemoveListener(OutItem);
         useButton.onClick.RemoveListener(UseItem);
-        toolImage.gameObject.SetActive(false);
+        toolPopUp.gameObject.SetActive(false);
 
         OnTool -= ShowSet;
     }
 
     private void ShowSet(bool value)
     {
-        toolImage.gameObject.SetActive(value);
+        toolPopUp.gameObject.SetActive(value);
     }
 
     private void ShowTool()
@@ -61,9 +61,12 @@ public class ItemPanelPrefab : PooledObject
         ToolValue = !ToolValue;
     }
 
-    private void SellItem()
+    private void OutItem()
     {
         InventoryManager.Instance.UseItem(itemSO);
+        SampleItem item = PoolManager.Instance.itemPool.GetPooled() as SampleItem;
+        item.Init(itemSO);
+        item.transform.position = FindObjectOfType<PlayerController>().transform.position;
     }
 
     private void UseItem()

@@ -50,15 +50,15 @@ public class SampleItem : PooledObject, ISell
         }
     }
 
-    public void Sell(Item item)
+    public void Sell()
     {
-        if(item.moneyType == EMoney.questPoint)
+        if(itemSO.moneyType == EMoney.questPoint)
         {
-            InventoryManager.Instance.myQuestPoint += item.cost;
+            InventoryManager.Instance.myQuestPoint += itemSO.cost;
         }
         else
         {
-            InventoryManager.Instance.myNormalPoint += item.cost;
+            InventoryManager.Instance.myNormalPoint += itemSO.cost;
         }
     }
 

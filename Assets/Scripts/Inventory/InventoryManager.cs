@@ -66,6 +66,7 @@ public class InventoryManager : Singleton<InventoryManager>
             }
 
             currentWeight -= itemSO.weight;
+            OnChanageItem?.Invoke();
         }
     }
 
@@ -94,4 +95,13 @@ public class InventoryManager : Singleton<InventoryManager>
         return true;
     }
 
+    public Item ItemData(Item itemSO)
+    {
+        if (itemList.Contains(itemSO))
+        {
+            return itemSO;
+        }
+
+        return null;
+    }
 }

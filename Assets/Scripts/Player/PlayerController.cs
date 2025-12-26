@@ -3,7 +3,6 @@ using Invector.vCharacterController;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -12,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private vThirdPersonCamera cameraController;
 
     [SerializeField] private GameObject inventoryView;
+    
 
     private bool isInventoryOpen;
     public bool IsInventoryOpen { get { return isInventoryOpen; } set { isInventoryOpen = value; OnInventoryOpen?.Invoke(isInventoryOpen); } }

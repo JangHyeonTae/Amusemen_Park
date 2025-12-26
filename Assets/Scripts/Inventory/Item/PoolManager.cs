@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class PoolManager : Singleton<PoolManager>
 {
-    private void Start()
+    public SampleItem sampleItem;
+    public ObjectPool itemPool;
+    protected override void Awake()
     {
+        base.Awake();
+        CreatePool();
     }
 
-    private void Create()
+    private void CreatePool()
     {
-
+        itemPool = new ObjectPool(sampleItem, 100, transform);
     }
 }
