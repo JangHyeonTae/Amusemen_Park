@@ -9,6 +9,12 @@ public class SampleItem : PooledObject, ISell
     private GameObject obj;
     public int price;
 
+    private void OnDisable()
+    {
+        itemSO = null;
+        obj = null;
+        price = 0;
+    }
     public void Init(Item item)
     {
         itemSO = item;
@@ -23,9 +29,17 @@ public class SampleItem : PooledObject, ISell
 
     public void GetItem()
     {
-        PopUpManager.Instance.HidePopUP();
-        InventoryManager.Instance.AddItem(itemSO);
-        Destroy(gameObject);
+        bool added = InventoryManager.Instance.AddItem(itemSO);
+
+        if (added)
+        {
+            PopUpManager.Instance.HidePopUP();
+            this.Release();
+        }
+        else
+        {
+            // 못 들감 사운드
+        }
     }
 
     public void Use(Item item)

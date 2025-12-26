@@ -9,8 +9,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private vThirdPersonController vController;
-
     private vThirdPersonCamera cameraController;
+
+    [SerializeField] private GameObject inventoryView;
 
     private bool isInventoryOpen;
     public bool IsInventoryOpen { get { return isInventoryOpen; } set { isInventoryOpen = value; OnInventoryOpen?.Invoke(isInventoryOpen); } }
@@ -47,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
     private void OpenInventroy(bool value)
     {
-        InventoryManager.Instance.OpenInventory(value);
+        inventoryView.gameObject.SetActive(value);
 
         Cursor.visible = value;
         Cursor.lockState = value ? CursorLockMode.None : CursorLockMode.Locked;

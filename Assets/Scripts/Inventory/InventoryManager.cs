@@ -15,16 +15,27 @@ public class InventoryManager : Singleton<InventoryManager>
     public Dictionary<Item, int> itemDic;
     public List<Item> itemList;
 
-    [SerializeField] private InventoryView inventoryView;
 
     public int myQuestPoint = 0;
     public int myNormalPoint = 0;
     public int currentWeight;
     public int maxWeight = 15;
 
+    public Action OnChanageItem;
+
     protected override void Awake()
     {
         base.Awake();
+
+    }
+
+    private void OnEnable()
+    {
+
+    }
+
+    private void OnDisable()
+    { 
 
     }
 
@@ -58,31 +69,29 @@ public class InventoryManager : Singleton<InventoryManager>
         }
     }
 
-    public void AddItem(Item itemSO)
+    public bool AddItem(Item itemSO)
     {
         int bag = currentWeight + itemSO.weight;
-        if (bag <= maxWeight && itemDic.Count < 15)
+
+        if (bag > maxWeight || itemDic.Count >= 15)
         {
-            if (itemDic.ContainsKey(itemSO))
-            {
-                itemDic[itemSO]++;
-                Debug.Log(itemDic[itemSO]);
-            }
-            else
-            {
-                itemList.Add(itemSO);
-                itemDic.Add(itemSO, 1);
-            }
-            currentWeight += itemSO.weight;
+            Debug.Log("Max Weight");
+            return false;
+        }
+
+        if (itemDic.ContainsKey(itemSO))
+        {
+            itemDic[itemSO]++;
         }
         else
         {
-            Debug.Log("Max Weight");
+            itemList.Add(itemSO);
+            itemDic.Add(itemSO, 1);
         }
+
+        currentWeight += itemSO.weight;
+        OnChanageItem?.Invoke();
+        return true;
     }
 
-    public void OpenInventory(bool value)
-    {
-        inventoryView.gameObject.SetActive(value);
-    }
 }

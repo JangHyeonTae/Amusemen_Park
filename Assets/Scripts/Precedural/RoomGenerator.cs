@@ -15,6 +15,19 @@ public class RoomGenerator : SampleMap
 
     private List<Vector3Int> posList = new();
 
+    [Header("Ǯ")]
+    private ObjectPool itemPool;
+
+    private void Start()
+    {
+        itemPool = new ObjectPool(sampleItem, 100, this.transform, true);
+    }
+
+    protected  void OnDisable()
+    {
+        DestroyItem();
+    }
+
     protected override void RunProceduralGeneration()
     {
         DestroyItem();
@@ -107,15 +120,31 @@ public class RoomGenerator : SampleMap
 
             for (int index = 0; index < randomWalkso.maxItemCount; index++)
             {
-                SampleItem inst = Instantiate(sampleItem);
-                inst.transform.SetParent(itemParent);
-                inst.Init(itemSO[UnityEngine.Random.Range(0, itemSO.Length)]);
-                
-                inst.transform.position = new Vector3Int(posList[index].x * (int)mapVisualizer.GridSize().x, 0,
+                SampleItem item = itemPool.GetPooled() as SampleItem;
+                item.Init(itemSO[UnityEngine.Random.Range(0, itemSO.Length)]);
+
+
+                item.transform.position = new Vector3Int(posList[index].x * (int)mapVisualizer.GridSize().x, 0,
                                 posList[index].y * (int)mapVisualizer.GridSize().y);
             }
 
         }
+        //private void ReSetRelicsPanel(ItemObject changedItem)
+        //{
+
+        //    for (int i = 0; i < inventoryManager.relicsList.Count; i++)
+        //    {
+        //        ItemRelicsPanelItem item = (ItemRelicsPanelItem)relicsPool.list[i];
+        //        item.Outit(inventoryManager.relicsList[i]);
+        //        relicsPool.list[i].Release();
+        //    }
+
+        //    for (int i = 0; i < inventoryManager.relicsList.Count; i++)
+        //    {
+        //        ItemRelicsPanelItem panel = relicsPool.GetPooled() as ItemRelicsPanelItem;
+        //        panel.Init(inventoryManager.relicsList[i]);
+        //    }
+        //}
 
 
         if (GameSystemManager.Instance == null)
@@ -221,4 +250,21 @@ public class RoomGenerator : SampleMap
         return corridor;
     }
 
+    protected void DestroyItem()
+    {
+        for (int i = itemPool.poolParent.transform.childCount - 1; i >= 0; i--)
+        {
+            if (itemPool.poolParent.transform.childCount <= 0)
+                break;
+
+            var child = itemPool.poolParent.transform.GetChild(i).GetComponent<SampleItem>();
+
+            if (UnityEngine.Application.isPlaying)
+            {
+                child.Release();
+            }
+            else
+                DestroyImmediate(child);
+        }
+    }
 }

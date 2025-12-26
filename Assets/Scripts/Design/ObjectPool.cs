@@ -6,9 +6,9 @@ using UnityEngine.Pool;
 public class ObjectPool
 {
     private PooledObject poolPrefab;
-    private GameObject poolParent;
+    public GameObject poolParent;
 
-    public List<PooledObject> list;
+    public List<PooledObject> poolList;
 
     public ObjectPool(PooledObject _poolPrefab, int _poolSize, Transform _parent = null, bool isInGame = false)
     {
@@ -17,7 +17,7 @@ public class ObjectPool
 
     private void SetupPool(PooledObject _poolPrefab, int _poolSize, Transform _parent, bool isInGame)
     {
-        list = new List<PooledObject>(_poolSize);
+        poolList = new List<PooledObject>(_poolSize);
         poolPrefab = _poolPrefab;
 
         if (!isInGame)
@@ -35,14 +35,14 @@ public class ObjectPool
             PooledObject instance = MonoBehaviour.Instantiate(poolPrefab, poolParent.transform);
             instance.gameObject.SetActive(false);
             instance.PooledInit(this);
-            list.Add(instance);
+            poolList.Add(instance);
         }
     }
 
 
     public PooledObject GetPooled()
     {
-        if (list.Count == 0)
+        if (poolList.Count == 0)
         {
             PooledObject newInst = MonoBehaviour.Instantiate(poolPrefab, poolParent.transform);
             newInst.gameObject.SetActive(true);
@@ -50,9 +50,9 @@ public class ObjectPool
             return newInst;
         }
 
-        int lastIndex = list.Count - 1;
-        PooledObject nextInst = list[lastIndex];
-        list.RemoveAt(lastIndex);
+        int lastIndex = poolList.Count - 1;
+        PooledObject nextInst = poolList[lastIndex];
+        poolList.RemoveAt(lastIndex);
         nextInst.gameObject.SetActive(true);
         nextInst.PooledInit(this);
         return nextInst;
@@ -63,7 +63,7 @@ public class ObjectPool
         pooledObject.gameObject.SetActive(false);
         pooledObject.PooledInit(this);
         //pooledObject.transform.parent = poolObject.transform;
-        list.Add(pooledObject);
+        poolList.Add(pooledObject);
     }
 
     public void ReturAllPool(List<PooledObject> pools)
@@ -72,7 +72,7 @@ public class ObjectPool
         {
             p.gameObject.SetActive(false);
             p.PooledInit(this);
-            list.Add(p);
+            poolList.Add(p);
         }
     }
 

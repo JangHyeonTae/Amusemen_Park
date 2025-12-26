@@ -9,11 +9,23 @@ public class InventoryView : MonoBehaviour
     InventoryManager inventoryManager;
     private ObjectPool itemPanelPool;
     [SerializeField] private Transform itemPanelParent;
-    
+
+
+    private void OnEnable()
+    {
+        inventoryManager = InventoryManager.Instance;
+
+        InventoryManager.Instance.OnChanageItem += ResetInventory;
+    }
+
+    private void OnDisable()
+    {
+        InventoryManager.Instance.OnChanageItem -= ResetInventory;
+        inventoryManager = null;
+    }
 
     private void Start()
     {
-        inventoryManager = InventoryManager.Instance;
         itemPanelPool = new ObjectPool(itemPanel, 15, itemPanelParent, false);
     }
 
@@ -22,14 +34,24 @@ public class InventoryView : MonoBehaviour
         
     }
 
-    private void ReSpawn()
+    public void ResetInventory()
     {
-        for(int i =0; i < inventoryManager.itemDic.Count; i++)
+
+        for (int i = 0; i < inventoryManager.itemDic.Count; i++)
         {
-            ItemPanelPrefab obj = itemPanelPool.GetPooled() as ItemPanelPrefab;
-            obj.Init(inventoryManager.itemList[i]);
+            ItemPanelPrefab item = (ItemPanelPrefab)itemPanelPool.poolList[i];
+            item.Outit(inventoryManager.itemList[i]);
+            itemPanelPool.poolList[i].Release();
         }
+
+        for (int i = 0; i < inventoryManager.itemDic.Count; i++)
+        {
+            ItemPanelPrefab panel = itemPanelPool.GetPooled() as ItemPanelPrefab;
+            panel.Init(inventoryManager.itemList[i], inventoryManager.itemDic[inventoryManager.itemList[i]]);
+        }
+
     }
+
 
 
 }
