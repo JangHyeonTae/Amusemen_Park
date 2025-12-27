@@ -29,10 +29,6 @@ public class InventoryView : MonoBehaviour
         itemPanelPool = new ObjectPool(itemPanel, 15, itemPanelParent, false);
     }
 
-    private void ShowItem()
-    {
-        
-    }
 
     public void ResetInventory()
     {

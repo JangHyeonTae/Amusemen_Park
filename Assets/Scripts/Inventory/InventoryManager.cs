@@ -26,24 +26,10 @@ public class InventoryManager : Singleton<InventoryManager>
     protected override void Awake()
     {
         base.Awake();
-
-    }
-
-    private void OnEnable()
-    {
-
-    }
-
-    private void OnDisable()
-    { 
-
-    }
-
-    private void Start()
-    {
         itemDic = new();
         itemList = new();
     }
+
 
     public int CurrentPoint()
     {

@@ -55,12 +55,15 @@ public class SampleItem : PooledObject, ISell
         if(itemSO.moneyType == EMoney.questPoint)
         {
             InventoryManager.Instance.myQuestPoint += itemSO.cost;
+            Release();
         }
         else
         {
             InventoryManager.Instance.myNormalPoint += itemSO.cost;
+            Release();
         }
-    }
 
+        
+    }
 
 }

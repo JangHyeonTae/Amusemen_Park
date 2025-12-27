@@ -1,17 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+
+public enum PressEnum
+{
+    Start,
+    End,
+    Shop,
+    Item
+}
 
 public class PressFObj : MonoBehaviour
 {
-    public bool isStart;
+    [SerializeField] private PressEnum pressEnum;
 
     private Transform playerTr;
     private bool canInteract;
     private SampleItem sampleItem;
+    private ShopManager shopManager;
+
     private void Awake()
     {
         sampleItem = GetComponent<SampleItem>();
+        shopManager = GetComponent<ShopManager>();
     }
 
 
@@ -21,27 +33,48 @@ public class PressFObj : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            if (sampleItem == null)
-            {
-                if (isStart)
-                {
-                    Vector3 target = GameSystemManager.Instance.mapStartPos;
-                    target.y = playerTr.position.y;
 
-                    TeleportPlayer(playerTr, target);
-                }
-                else
-                {
-                    GameSystemManager.Instance.MapClear();
-                }
-            }
-            else
+            switch (pressEnum)
             {
-                sampleItem.GetItem();
+                case PressEnum.Start:
+                    StartGame();
+                    break;
+                case PressEnum.End:
+                    GoToEnd();
+                    break;
+                case PressEnum.Shop:
+                    ShowShop();
+                    break;
+                case PressEnum.Item:
+                    GetItem();
+                    break;
             }
-            
         }
     }
+    private void StartGame()
+    {
+        Vector3 target = GameSystemManager.Instance.mapStartPos;
+        target.y = playerTr.position.y;
+
+        TeleportPlayer(playerTr, target);
+    }
+    private void GoToEnd()
+    {
+        GameSystemManager.Instance.MapClear();
+    }
+    private void ShowShop()
+    {
+        shopManager.ShowShop();
+    }
+    private void GetItem()
+    {
+        if (sampleItem == null)
+            return;
+
+        sampleItem.GetItem();
+    }
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;

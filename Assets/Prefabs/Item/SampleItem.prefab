@@ -60,8 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb1657213ca713640aac4ba17d9d4723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStart: 0
-  isItem: 1
+  pressEnum: 3
 --- !u!65 &2463161715825850449
 BoxCollider:
   m_ObjectHideFlags: 0
