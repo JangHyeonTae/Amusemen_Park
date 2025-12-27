@@ -36,12 +36,9 @@ public class ItemPanelPrefab : PooledObject
     }
 
 
-    public void Outit(Item itemSO)
+    public void Outit()
     {
-        if (this.itemSO == itemSO)
-        {
-            this.itemSO = null;
-        }
+        itemSO = null;
 
         ItemImageButton.onClick.RemoveListener(ShowTool);
         outButton.onClick.RemoveListener(OutItem);
@@ -63,10 +60,10 @@ public class ItemPanelPrefab : PooledObject
 
     private void OutItem()
     {
-        InventoryManager.Instance.UseItem(itemSO);
         SampleItem item = PoolManager.Instance.itemPool.GetPooled() as SampleItem;
         item.Init(itemSO);
         item.transform.position = FindObjectOfType<PlayerController>().transform.position;
+        InventoryManager.Instance.UseItem(itemSO);
     }
 
     private void UseItem()

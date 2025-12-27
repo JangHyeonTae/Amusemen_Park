@@ -34,21 +34,27 @@ public class InventoryView : MonoBehaviour
         
     }
 
-
     public void ResetInventory()
     {
-
-        for (int i = 0; i < inventoryManager.itemDic.Count; i++)
+        for (int i = itemPanelParent.childCount - 1; i >= 0; i--)
         {
-            ItemPanelPrefab item = (ItemPanelPrefab)itemPanelPool.poolList[i];
-            item.Outit(inventoryManager.itemList[i]);
-            itemPanelPool.poolList[i].Release();
+            var panel = itemPanelParent.GetChild(i).GetComponent<ItemPanelPrefab>();
+            if (panel == null) continue;
+
+            panel.Outit();
+            panel.Release();
         }
 
-        for (int i = 0; i < inventoryManager.itemDic.Count; i++)
+        for (int i = 0; i < inventoryManager.itemList.Count; i++)
         {
+            Item itemSO = inventoryManager.itemList[i];
+            int count = inventoryManager.itemDic[itemSO];
+
             ItemPanelPrefab panel = itemPanelPool.GetPooled() as ItemPanelPrefab;
-            panel.Init(inventoryManager.itemList[i], inventoryManager.itemDic[inventoryManager.itemList[i]]);
+
+            panel.transform.SetParent(itemPanelParent, false);
+
+            panel.Init(itemSO, count);
         }
 
     }

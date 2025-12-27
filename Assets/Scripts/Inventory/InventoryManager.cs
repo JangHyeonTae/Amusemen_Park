@@ -54,6 +54,7 @@ public class InventoryManager : Singleton<InventoryManager>
     {
         if (itemDic.ContainsKey(itemSO))
         {
+            Item data = itemSO;
             if (itemDic[itemSO] > 1)
             {
                 itemDic[itemSO] -= 1;
@@ -95,13 +96,4 @@ public class InventoryManager : Singleton<InventoryManager>
         return true;
     }
 
-    public Item ItemData(Item itemSO)
-    {
-        if (itemList.Contains(itemSO))
-        {
-            return itemSO;
-        }
-
-        return null;
-    }
 }
