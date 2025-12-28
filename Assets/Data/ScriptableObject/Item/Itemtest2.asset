@@ -16,7 +16,7 @@ MonoBehaviour:
   <itemName>k__BackingField: bbb
   <itemIcon>k__BackingField: {fileID: 0}
   <canUse>k__BackingField: 0
-  <cost>k__BackingField: 10
+  <cost>k__BackingField: 5
   <moneyType>k__BackingField: 1
   <itemVisual>k__BackingField: {fileID: 5558612622019044360, guid: 362c1b75063e1c24db40f765e055559d, type: 3}
-  <weight>k__BackingField: 10
+  <weight>k__BackingField: 2
