@@ -11,16 +11,16 @@ public class InventoryView : MonoBehaviour
     [SerializeField] private Transform itemPanelParent;
 
     private bool initialized;
+    public List<ItemPanelPrefab> activePanels;
 
     private async void OnEnable()
     {
         inventoryManager = InventoryManager.Instance;
         InventoryManager.Instance.OnChanageItem += ResetInventory;
-        itemPanelParent = transform.Find("InventoryView");
-        //itemPanelParent = GameObject.FindGameObjectWithTag("InventoryView").transform;
+
         if (itemPanelParent == null)
         {
-            Debug.LogError("InventoryView null");
+            itemPanelParent = transform.Find("InventoryView");
             return;
         }
 
@@ -35,6 +35,7 @@ public class InventoryView : MonoBehaviour
         itemPanelPool = new ObjectPool(itemPanel, 15, itemPanelParent, false);
 
         initialized = true;
+        activePanels = new();
         ResetInventory();
     }
 
@@ -44,15 +45,9 @@ public class InventoryView : MonoBehaviour
         inventoryManager = null;
     }
 
-    private void Start()
-    {
-        itemPanelPool = new ObjectPool(itemPanel, 15, itemPanelParent, false);
-    }
-
 
     public void ResetInventory()
     {
-        List<ItemPanelPrefab> activePanels = new();
 
         for (int i = 0; i < activePanels.Count; i++)
         {

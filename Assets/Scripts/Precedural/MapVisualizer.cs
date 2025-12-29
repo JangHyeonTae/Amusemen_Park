@@ -145,8 +145,11 @@ public class MapVisualizer : MonoBehaviour
 
     public void Clear()
     {
-        floorTilemap.ClearAllTiles();
-        wallTilemap.ClearAllTiles();
+        if(floorTilemap != null)
+            floorTilemap.ClearAllTiles();
+
+        if(wallTilemap != null)
+            wallTilemap.ClearAllTiles();
 
         ClearObj();
         spawnedCells.Clear();
@@ -154,6 +157,9 @@ public class MapVisualizer : MonoBehaviour
 
     public void ClearObj()
     {
+        if (transform.childCount <= 0)
+            return;
+
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
             var child = transform.GetChild(i).gameObject;

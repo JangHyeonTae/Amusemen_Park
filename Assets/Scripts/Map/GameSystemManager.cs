@@ -15,6 +15,9 @@ public class GameSystemManager : Singleton<GameSystemManager>
     [SerializeField] private PressFObj endObj;
     AbstractMap generator;
 
+    PressFObj inst;
+    public PressFObj mapStartObj;
+    public PressFObj mapEndObj;
     protected override void Awake()
     {
         base.Awake();
@@ -29,19 +32,39 @@ public class GameSystemManager : Singleton<GameSystemManager>
 
     public void ChangeMap()
     {
+        ExtractFloor.ClearAll();
         generator.GenerateMap();
 
         startPos = new Vector3Int(3, 0, 3);
 
-        PressFObj inst = Instantiate(startObj, startPos, Quaternion.identity);
-        PressFObj mapStartObj = Instantiate(startObj, mapStartPos, Quaternion.identity);
-        PressFObj mapEndObj = Instantiate(endObj, mapEndPos, Quaternion.identity);
+        inst = Instantiate(startObj, startPos, Quaternion.identity);
+        mapStartObj = Instantiate(startObj, mapStartPos, Quaternion.identity);
+        mapEndObj = Instantiate(endObj, mapEndPos, Quaternion.identity);
 
         currentStage++;
     }
 
     public void ChangeShopScene(string sceneName)
     {
+        StartCoroutine(LoadAndInit(sceneName));
+    }
+
+    private IEnumerator LoadAndInit(string sceneName)
+    {
         SceneManager.LoadScene(sceneName);
+        if (inst != null)
+            Destroy(inst);
+        if (mapStartObj != null)
+            Destroy(mapStartObj);
+        if (mapEndObj != null)
+            Destroy(mapEndObj);
+        
+        yield return null;
+
+        if (sceneName == "Map")
+        {
+            generator = FindObjectOfType<AbstractMap>();
+            ChangeMap();
+        }
     }
 }

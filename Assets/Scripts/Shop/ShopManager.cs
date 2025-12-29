@@ -1,41 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopManager : MonoBehaviour
+public class ShopManager : Singleton<ShopManager>
 {
-    [SerializeField] private GameObject shopView;
-    public LayerMask targetLayer;
+    public GameObject shopView;
+    public GameObject shopObj;
 
-    private void OnEnable()
-    {
-        shopView = FindObjectOfType<ShopView>().transform.Find("ShopView").gameObject;
-    }
+    public int passPoint;
+
+    private bool isOpen;
+    public bool IsOpen { get  { return isOpen; } set { isOpen = value;  OnOpen?.Invoke(isOpen); } }
+    public Action<bool> OnOpen;
 
     private void OnDisable()
     {
         shopView = null;    
     }
 
-    public void ShowShop()
+    public void ShowShop(bool value)
     {
-        gameObject.SetActive(true);
+        if(shopView == null)
+            shopView = FindObjectOfType<ShopView>().transform.Find("ShopView").gameObject;
+
+        if(shopObj == null)
+            shopObj = GameObject.Find("Shop");
+
+        shopView.gameObject.SetActive(value);
+        IsOpen = value;
     }
 
 
-    private void SellObj()
-    {
-        Collider[] items = Physics.OverlapSphere(transform.position, 2f, targetLayer);
-        int sum = 0;
-        if (items.Length > 0)
-        {
-            for (int i = 0; i < items.Length; i++)
-            {
-                SampleItem item = items[i].GetComponent<SampleItem>();
-                sum += item.price;
-                item.Sell();
-            }
-        }
-    }
 
 }

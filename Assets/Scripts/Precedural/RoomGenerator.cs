@@ -14,7 +14,6 @@ public class RoomGenerator : SampleMap
     [SerializeField] private bool randomWalkRooms = false;
 
     private List<Vector3Int> posList = new();
-
     //[Header("Ǯ")]
     //private ObjectPool itemPool;
 
@@ -109,7 +108,6 @@ public class RoomGenerator : SampleMap
                     floor.Add(pos);
                 }
             }
-            
 
             ExtractFloor.AddItemPosDic(i, floor);
 
@@ -126,11 +124,12 @@ public class RoomGenerator : SampleMap
                 SampleItem item = PoolManager.Instance.itemPool.GetPooled() as SampleItem;
                 item.Init(itemSO[UnityEngine.Random.Range(0, itemSO.Length)]);
 
+                var normalPos = new Vector3Int(posList[index].x, 0, posList[index].y);
                 var pos = new Vector3Int(posList[index].x * (int)mapVisualizer.GridSize().x, 0,
                                 posList[index].y * (int)mapVisualizer.GridSize().y);
                 item.transform.position = pos;
-
-                posList.Remove(pos);
+                
+                posList.Remove(normalPos);
             }
 
         }

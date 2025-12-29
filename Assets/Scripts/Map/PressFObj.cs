@@ -18,14 +18,12 @@ public class PressFObj : MonoBehaviour
     private Transform playerTr;
     private bool canInteract;
     private SampleItem sampleItem;
-    private ShopManager shopManager;
 
     [SerializeField] private LayerMask targetLayer;
 
     private void Awake()
     {
         sampleItem = GetComponent<SampleItem>();
-        shopManager = GetComponent<ShopManager>();
     }
 
 
@@ -75,7 +73,7 @@ public class PressFObj : MonoBehaviour
     {
         if (Physics.OverlapSphere(transform.position, range, targetLayer).Length <= 0)
             return;
-        shopManager.ShowShop();
+        ShopManager.Instance.ShowShop(true);
     }
     private void GetItem(float range)
     {

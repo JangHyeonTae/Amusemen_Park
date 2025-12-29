@@ -59,4 +59,9 @@ public static class ExtractFloor
         roomFloorDataDic.Clear();
     }
 
+    public static void ClearAll()
+    {
+        roomFloorDataDic.Clear();
+        roomFloorDataList.Clear();
+    }
 }
