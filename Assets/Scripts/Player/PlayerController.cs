@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         cameraController = gameObject.GetComponentInChildren<vThirdPersonCamera>();
+        inventoryView = FindObjectOfType<InventoryView>().transform.Find("InventoryView").gameObject;
     }
 
     private void OnEnable()

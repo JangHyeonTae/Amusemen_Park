@@ -126,8 +126,11 @@ public class RoomGenerator : SampleMap
                 SampleItem item = PoolManager.Instance.itemPool.GetPooled() as SampleItem;
                 item.Init(itemSO[UnityEngine.Random.Range(0, itemSO.Length)]);
 
-                item.transform.position = new Vector3Int(posList[index].x * (int)mapVisualizer.GridSize().x, 0,
+                var pos = new Vector3Int(posList[index].x * (int)mapVisualizer.GridSize().x, 0,
                                 posList[index].y * (int)mapVisualizer.GridSize().y);
+                item.transform.position = pos;
+
+                posList.Remove(pos);
             }
 
         }

@@ -20,6 +20,8 @@ public class PressFObj : MonoBehaviour
     private SampleItem sampleItem;
     private ShopManager shopManager;
 
+    [SerializeField] private LayerMask targetLayer;
+
     private void Awake()
     {
         sampleItem = GetComponent<SampleItem>();
@@ -37,37 +39,48 @@ public class PressFObj : MonoBehaviour
             switch (pressEnum)
             {
                 case PressEnum.Start:
-                    StartGame();
+                    StartGame(3);
                     break;
                 case PressEnum.End:
-                    GoToEnd();
+                    GoToEnd(3);
                     break;
                 case PressEnum.Shop:
-                    ShowShop();
+                    ShowShop(10);
                     break;
                 case PressEnum.Item:
-                    GetItem();
+                    GetItem(2);
                     break;
             }
         }
     }
-    private void StartGame()
+
+    
+
+    private void StartGame(float range)
     {
+        if (Physics.OverlapSphere(transform.position, range, targetLayer).Length <= 0)
+            return;
         Vector3 target = GameSystemManager.Instance.mapStartPos;
         target.y = playerTr.position.y;
 
         TeleportPlayer(playerTr, target);
     }
-    private void GoToEnd()
+    private void GoToEnd(float range)
     {
+        if (Physics.OverlapSphere(transform.position, range, targetLayer).Length <= 0)
+            return;
         GameSystemManager.Instance.ChangeShopScene("ShopScene");
     }
-    private void ShowShop()
+    private void ShowShop(float range)
     {
+        if (Physics.OverlapSphere(transform.position, range, targetLayer).Length <= 0)
+            return;
         shopManager.ShowShop();
     }
-    private void GetItem()
+    private void GetItem(float range)
     {
+        if (Physics.OverlapSphere(transform.position, range, targetLayer).Length <= 0)
+            return;
         if (sampleItem == null)
             return;
 

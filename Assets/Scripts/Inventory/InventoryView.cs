@@ -10,14 +10,32 @@ public class InventoryView : MonoBehaviour
     private ObjectPool itemPanelPool;
     [SerializeField] private Transform itemPanelParent;
 
+    private bool initialized;
 
-    private void OnEnable()
+    private async void OnEnable()
     {
         inventoryManager = InventoryManager.Instance;
-
         InventoryManager.Instance.OnChanageItem += ResetInventory;
-        itemPanel = DataManager.Instance.GetData("ItemPanelPrefab").GetComponent<ItemPanelPrefab>();
-        itemPanelParent = GameObject.FindGameObjectWithTag("InventoryView").transform;
+        itemPanelParent = transform.Find("InventoryView");
+        //itemPanelParent = GameObject.FindGameObjectWithTag("InventoryView").transform;
+        if (itemPanelParent == null)
+        {
+            Debug.LogError("InventoryView null");
+            return;
+        }
+
+        var go = await DataManager.Instance.GetData("ItemPanelPrefab");
+        if (go == null)
+        {
+            Debug.LogError("ItemPanelPrefab 로드 실패");
+            return;
+        }
+
+        itemPanel = go.GetComponent<ItemPanelPrefab>();
+        itemPanelPool = new ObjectPool(itemPanel, 15, itemPanelParent, false);
+
+        initialized = true;
+        ResetInventory();
     }
 
     private void OnDisable()
@@ -34,14 +52,15 @@ public class InventoryView : MonoBehaviour
 
     public void ResetInventory()
     {
-        for (int i = itemPanelParent.childCount - 1; i >= 0; i--)
-        {
-            var panel = itemPanelParent.GetChild(i).GetComponent<ItemPanelPrefab>();
-            if (panel == null) continue;
+        List<ItemPanelPrefab> activePanels = new();
 
-            panel.Outit();
-            panel.Release();
+        for (int i = 0; i < activePanels.Count; i++)
+        {
+            if (activePanels[i] == null) continue;
+            activePanels[i].Outit();
+            activePanels[i].Release();
         }
+        activePanels.Clear();
 
         for (int i = 0; i < inventoryManager.itemList.Count; i++)
         {
@@ -49,10 +68,10 @@ public class InventoryView : MonoBehaviour
             int count = inventoryManager.itemDic[itemSO];
 
             ItemPanelPrefab panel = itemPanelPool.GetPooled() as ItemPanelPrefab;
-
             panel.transform.SetParent(itemPanelParent, false);
-
             panel.Init(itemSO, count);
+
+            activePanels.Add(panel);
         }
 
     }

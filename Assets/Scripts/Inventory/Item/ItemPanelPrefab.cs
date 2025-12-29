@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class ItemPanelPrefab : PooledObject
 {
-    private Item itemSO;
+    public Item itemSO;
 
     [SerializeField] private Image toolPopUp;
 
@@ -22,15 +22,24 @@ public class ItemPanelPrefab : PooledObject
     public Action<bool> OnTool;
     
     public void Init(Item itemSO, int itemCount)
-    {
+    { 
+
+        ItemImageButton.onClick.RemoveListener(ShowTool);
+        outButton.onClick.RemoveListener(OutItem);
+        useButton.onClick.RemoveListener(UseItem);
+
+        OnTool -= ShowSet;
+
+
         ToolValue = false;
         this.itemSO = itemSO;
 
         itemCountText.text = itemCount.ToString();
 
+
         ItemImageButton.onClick.AddListener(ShowTool);
         outButton.onClick.AddListener(OutItem);
-        useButton.onClick.AddListener(UseItem);
+        useButton.onClick.AddListener(UseItem); 
 
         OnTool += ShowSet;
     }

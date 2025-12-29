@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,19 +13,14 @@ public class DataManager : Singleton<DataManager>
         base.Awake();
     }
 
-    public GameObject GetData(string name)
+    public async UniTask<GameObject> GetData(string name)
     {
-        GameObject data = null;
-        Addressables.LoadAssetAsync<GameObject>(name).Completed += (a) =>
-        {
-            if (a.Status != AsyncOperationStatus.Succeeded)
-            {
-                return;
-            }
+        var handle = Addressables.LoadAssetAsync<GameObject>(name);
+        await handle.Task;
 
-            data = a.Result;
-        };
+        if (handle.Status != AsyncOperationStatus.Succeeded)
+            return null;
 
-        return data;
+        return handle.Result;
     }
 }

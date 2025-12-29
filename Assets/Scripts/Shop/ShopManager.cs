@@ -9,7 +9,7 @@ public class ShopManager : MonoBehaviour
 
     private void OnEnable()
     {
-        shopView = GameObject.FindGameObjectWithTag("ShopView");
+        shopView = FindObjectOfType<ShopView>().transform.Find("ShopView").gameObject;
     }
 
     private void OnDisable()
