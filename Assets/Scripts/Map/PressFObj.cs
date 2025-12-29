@@ -60,7 +60,7 @@ public class PressFObj : MonoBehaviour
     }
     private void GoToEnd()
     {
-        GameSystemManager.Instance.MapClear();
+        GameSystemManager.Instance.ChangeShopScene("ShopScene");
     }
     private void ShowShop()
     {

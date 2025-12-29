@@ -59,5 +59,11 @@ public class PlayerController : MonoBehaviour
         if (cameraController != null)
             cameraController.enabled = !value;
     }
+
+    public void Die()
+    {
+        Debug.Log("플레이어 죽음");
+        GameSystemManager.Instance.currentStage = 0;
+    }
 }
 

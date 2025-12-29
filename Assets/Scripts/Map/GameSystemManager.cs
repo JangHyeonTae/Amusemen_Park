@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class GameSystemManager : Singleton<GameSystemManager>
@@ -23,6 +24,11 @@ public class GameSystemManager : Singleton<GameSystemManager>
 
     private void Start()
     {
+        ChangeMap();
+    }
+
+    public void ChangeMap()
+    {
         generator.GenerateMap();
 
         startPos = new Vector3Int(3, 0, 3);
@@ -30,23 +36,12 @@ public class GameSystemManager : Singleton<GameSystemManager>
         PressFObj inst = Instantiate(startObj, startPos, Quaternion.identity);
         PressFObj mapStartObj = Instantiate(startObj, mapStartPos, Quaternion.identity);
         PressFObj mapEndObj = Instantiate(endObj, mapEndPos, Quaternion.identity);
+
+        currentStage++;
     }
 
-    public void ChangeMap()
+    public void ChangeShopScene(string sceneName)
     {
-
-    }
-
-    public void MapClear()
-    {
-        if (InventoryManager.Instance.CurrentPoint() >= QuestManager.Instance.CurrentQuest(0).questNeedCount)
-        {
-            Debug.Log("성공");
-            currentStage++;
-        }
-        else
-        {
-            Debug.Log("미션 실패");
-        }
+        SceneManager.LoadScene(sceneName);
     }
 }

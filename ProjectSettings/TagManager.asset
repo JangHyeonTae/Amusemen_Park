@@ -30,6 +30,8 @@ TagManager:
   - CoverPoint
   - Interactable
   - AIAction
+  - ShopView
+  - InventoryView
   layers:
   - Default
   - TransparentFX

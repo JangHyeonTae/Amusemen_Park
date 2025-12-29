@@ -16,6 +16,8 @@ public class InventoryView : MonoBehaviour
         inventoryManager = InventoryManager.Instance;
 
         InventoryManager.Instance.OnChanageItem += ResetInventory;
+        itemPanel = DataManager.Instance.GetData("ItemPanelPrefab").GetComponent<ItemPanelPrefab>();
+        itemPanelParent = GameObject.FindGameObjectWithTag("InventoryView").transform;
     }
 
     private void OnDisable()
