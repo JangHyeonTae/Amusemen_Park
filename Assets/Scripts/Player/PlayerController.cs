@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamagable
 {
     private vThirdPersonController vController;
     private vThirdPersonCamera cameraController;
@@ -86,6 +86,11 @@ public class PlayerController : MonoBehaviour
 
         if (cameraController != null)
             cameraController.enabled = !value;
+    }
+
+    public void TakeDamage()
+    {
+        Die();
     }
 
     public void Die()

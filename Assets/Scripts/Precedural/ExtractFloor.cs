@@ -8,6 +8,7 @@ public static class ExtractFloor
 {
     public static Dictionary<int, List<Vector3Int>> roomFloorDataDic = new Dictionary<int, List<Vector3Int>>();
     public static List<Vector3Int> roomFloorDataList = new List<Vector3Int>();
+    public static List<Vector3Int> cooridorDataList = new List<Vector3Int>();
 
     public static List<Vector3Int> InstItemGenerator(int roomIndex, RandomWalkSO so)
     {
@@ -40,6 +41,7 @@ public static class ExtractFloor
 
         roomFloorDataDic.Add(roomIndex, list);
     }
+
 
     public static List<Vector3Int> IntersectList(List<Vector3Int> list)
     {
