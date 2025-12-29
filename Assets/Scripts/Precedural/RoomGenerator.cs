@@ -108,7 +108,7 @@ public class RoomGenerator : SampleMap
                     floor.Add(pos);
                 }
             }
-
+            
             ExtractFloor.AddItemPosDic(i, floor);
 
             posList.Clear();

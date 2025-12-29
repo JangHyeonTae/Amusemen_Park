@@ -17,6 +17,12 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: dd542ba5b142e9c489b22aac3bdbe9a6
   m_SerializeEntries:
+  - m_GUID: 3112560f02382484a99de6aba9ac896a
+    m_Address: Sound
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AudioClips
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b9f738afadc4f394fa558a7eb6eecef4
     m_Address: ItemPanelPrefab
     m_ReadOnly: 0

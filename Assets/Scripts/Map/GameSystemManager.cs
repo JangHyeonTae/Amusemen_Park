@@ -18,6 +18,8 @@ public class GameSystemManager : Singleton<GameSystemManager>
     PressFObj inst;
     public PressFObj mapStartObj;
     public PressFObj mapEndObj;
+
+    [SerializeField] private AudioClip audioClip1;
     protected override void Awake()
     {
         base.Awake();
@@ -32,6 +34,11 @@ public class GameSystemManager : Singleton<GameSystemManager>
 
     public void ChangeMap()
     {
+        if (currentStage == 2)
+        {
+            AudioManager.Instance.PlayeSFX(audioClip1);
+        }
+
         ExtractFloor.ClearAll();
         generator.GenerateMap();
 
