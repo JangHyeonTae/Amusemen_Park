@@ -140,7 +140,7 @@ public class MonsterSample : MonoBehaviour
 
     public void AttackEvent()
     {
-        Collider[] _colliders = Physics.OverlapSphere(transform.position, 1, targetLayer);
+        Collider[] _colliders = Physics.OverlapSphere(transform.position, 3, targetLayer);
 
         foreach (Collider target in _colliders)
         {
@@ -151,14 +151,19 @@ public class MonsterSample : MonoBehaviour
 
             Vector3 targetDir = (targetPos - attackPos).normalized;
 
-            if (Vector3.Angle(transform.forward, targetDir) > 20 * 0.5f)
+            if (Vector3.Angle(transform.forward, targetDir) > 180 * 0.5f)
                 continue;
 
 
             IDamagable damageable = target.GetComponent<IDamagable>();
             if (damageable != null)
             {
+                Debug.Log($"{target.name}");
                 damageable.TakeDamage();
+            }
+            else
+            {
+                Debug.Log("damageable null");
             }
         }
     }
