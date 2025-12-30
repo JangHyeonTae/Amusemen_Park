@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class RoomGenerator : SampleMap
 {
@@ -14,6 +15,7 @@ public class RoomGenerator : SampleMap
     [SerializeField] private bool randomWalkRooms = false;
 
     private List<Vector3Int> posList = new();
+    private List<Vector3Int> monsterPosList = new();
     //[Header("Ǯ")]
     //private ObjectPool itemPool;
 
@@ -113,6 +115,7 @@ public class RoomGenerator : SampleMap
 
             posList.Clear();
             posList = ExtractFloor.InstItemGenerator(i, randomWalkso);
+            monsterPosList = ExtractFloor.InstItemGenerator(i, randomWalkso);
 
             intersectList = ExtractFloor.IntersectList(posList);
 
@@ -130,6 +133,19 @@ public class RoomGenerator : SampleMap
                 item.transform.position = pos;
                 
                 posList.Remove(normalPos);
+            }
+
+            for (int index = 0; index < GameSystemManager.Instance.currentStage - 1; index++)
+            {
+                MonsterSample inst = PoolManager.Instance.monsterPool.GetPooled() as MonsterSample;
+                inst.Init();
+
+                var normalPos = new Vector3Int(monsterPosList[index].x, 0, monsterPosList[index].y);
+                var pos = new Vector3Int(monsterPosList[index].x * (int)mapVisualizer.GridSize().x, 0,
+                                monsterPosList[index].y * (int)mapVisualizer.GridSize().y);
+                inst.transform.position = pos;
+
+                monsterPosList.Remove(normalPos);
             }
 
         }
@@ -246,6 +262,21 @@ public class RoomGenerator : SampleMap
                 break;
 
             var child = PoolManager.Instance.itemPool.poolParent.transform.GetChild(i).GetComponent<SampleItem>();
+
+            if (UnityEngine.Application.isPlaying)
+            {
+                child.Release();
+            }
+            else
+                DestroyImmediate(child);
+        }
+
+        for (int i = PoolManager.Instance.monsterPool.poolParent.transform.childCount - 1; i >= 0; i--)
+        {
+            if (PoolManager.Instance.monsterPool.poolParent.transform.childCount <= 0)
+                break;
+
+            var child = PoolManager.Instance.monsterPool.poolParent.transform.GetChild(i).GetComponent<MonsterSample>();
 
             if (UnityEngine.Application.isPlaying)
             {

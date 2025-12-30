@@ -6,6 +6,9 @@ public class PoolManager : Singleton<PoolManager>
 {
     public SampleItem sampleItem;
     public ObjectPool itemPool;
+
+    public MonsterSample monsterSample;
+    public ObjectPool monsterPool;
     protected override void Awake()
     {
         base.Awake();
@@ -15,5 +18,6 @@ public class PoolManager : Singleton<PoolManager>
     private void CreatePool()
     {
         itemPool = new ObjectPool(sampleItem, 100, transform);
+        monsterPool = new ObjectPool(monsterSample, 40, transform);
     }
 }

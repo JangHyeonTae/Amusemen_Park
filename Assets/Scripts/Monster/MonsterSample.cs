@@ -17,7 +17,7 @@ public enum MState
     Dead
 }
 
-public class MonsterSample : MonoBehaviour
+public class MonsterSample : PooledObject
 {
     public LayerMask targetLayer;
     public MState state;
@@ -33,7 +33,7 @@ public class MonsterSample : MonoBehaviour
 
     CancellationTokenSource token;
 
-    private void OnEnable()
+    public void Init()
     {
         target = FindObjectOfType<PlayerController>();
         animator = GetComponent<Animator>();
@@ -41,7 +41,17 @@ public class MonsterSample : MonoBehaviour
         startPos = transform.position;
         ResetToken();
     }
-    
+
+    private void OnDisable()
+    {
+        if (token != null)
+        {
+            token.Cancel();
+            token.Dispose();
+            token = null;
+        }
+        Dead();
+    }
 
     private void ResetToken()
     {
@@ -197,4 +207,6 @@ public class MonsterSample : MonoBehaviour
                 break;
         }
     }
+
+    
 }
