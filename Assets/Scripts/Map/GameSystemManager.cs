@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,12 +28,8 @@ public class GameSystemManager : Singleton<GameSystemManager>
             generator = FindObjectOfType<AbstractMap>();
     }
 
-    private void Start()
-    {
-        ChangeMap();
-    }
 
-    public void ChangeMap()
+    public async UniTask ChangeMap()
     {
         if (currentStage == 2)
         {
@@ -44,14 +41,29 @@ public class GameSystemManager : Singleton<GameSystemManager>
 
         startPos = new Vector3Int(3, 0, 3);
 
+        if (startObj == null)
+        {
+            GameObject go = await DataManager.Instance.GetData("StartPos");
+            startObj = go.GetComponent<PressFObj>();
+        }
+
+        if (endObj == null)
+        {
+            GameObject go = await DataManager.Instance.GetData("EndPos");
+            endObj = go.GetComponent<PressFObj>();
+        }
+
         inst = Instantiate(startObj, startPos, Quaternion.identity);
         mapStartObj = Instantiate(startObj, mapStartPos, Quaternion.identity);
         mapEndObj = Instantiate(endObj, mapEndPos, Quaternion.identity);
 
         currentStage++;
+
+        if(currentStage != 0)
+            InventoryManager.Instance.maxWeight += (int)(currentStage * 2f);
     }
 
-    public void ChangeShopScene(string sceneName)
+    public void ChangeScene(string sceneName)
     {
         StartCoroutine(LoadAndInit(sceneName));
     }
@@ -71,7 +83,7 @@ public class GameSystemManager : Singleton<GameSystemManager>
         if (sceneName == "Map")
         {
             generator = FindObjectOfType<AbstractMap>();
-            ChangeMap();
+            ChangeMap().Forget();
         }
     }
 }

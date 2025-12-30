@@ -3848,7 +3848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainTarget: {fileID: 1416106629}
-  _smoothBetweenState: 0
+  _smoothBetweenState: 2
   _smoothCameraRotation: 12
   _smoothSwitchSide: 2
   _scrollSpeed: 10

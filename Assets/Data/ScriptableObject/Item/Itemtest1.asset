@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <itemNum>k__BackingField: 0
   <itemName>k__BackingField: aaa
-  <itemIcon>k__BackingField: {fileID: 0}
+  <itemIcon>k__BackingField: {fileID: 21300000, guid: edd9ade083872834e893aedd2b545d70, type: 3}
   <canUse>k__BackingField: 1
   <cost>k__BackingField: 1
   <moneyType>k__BackingField: 1
-  <itemVisual>k__BackingField: {fileID: 4188990828678104358, guid: 08d774b6c89e2a94eb2afdfd8938be41, type: 3}
+  <itemVisual>k__BackingField: {fileID: 489937548842179602, guid: 5f4d95941d900044eb74e47c08256706, type: 3}
   <weight>k__BackingField: 1

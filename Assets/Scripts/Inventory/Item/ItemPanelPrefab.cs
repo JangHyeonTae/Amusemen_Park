@@ -39,8 +39,9 @@ public class ItemPanelPrefab : PooledObject
 
         ItemImageButton.onClick.AddListener(ShowTool);
         outButton.onClick.AddListener(OutItem);
-        useButton.onClick.AddListener(UseItem); 
+        useButton.onClick.AddListener(UseItem);
 
+        ItemImageButton.GetComponent<Image>().sprite = itemSO.itemIcon;
         OnTool += ShowSet;
     }
 

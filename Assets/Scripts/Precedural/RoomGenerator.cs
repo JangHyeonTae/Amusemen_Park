@@ -156,9 +156,11 @@ public class RoomGenerator : SampleMap
             Debug.Log("GameSystemManager¾øÀ½");
         }
 
+        List<Vector3Int> SEPosList = new();
+        SEPosList = ExtractFloor.roomFloorDataList;
 
-        Vector3Int SPos = PosSet(intersectList, UnityEngine.Random.Range(0, (int)(posList.Count) / 2));
-        Vector3Int EPos = PosSet(intersectList, UnityEngine.Random.Range((int)(posList.Count - 1) / 2, posList.Count));
+        Vector3Int SPos = PosSet(intersectList, UnityEngine.Random.Range(0, (int)(SEPosList.Count) / 2));
+        Vector3Int EPos = PosSet(intersectList, UnityEngine.Random.Range((int)(SEPosList.Count - 1) / 2, SEPosList.Count));
         
 
         GameSystemManager.Instance.mapStartPos = SPos;

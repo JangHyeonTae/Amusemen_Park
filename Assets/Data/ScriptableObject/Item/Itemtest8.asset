@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca4493ae0785a44da122e3c3c4935fc, type: 3}
+  m_Name: Itemtest8
+  m_EditorClassIdentifier: 
+  <itemNum>k__BackingField: 7
+  <itemName>k__BackingField: lll
+  <itemIcon>k__BackingField: {fileID: 21300000, guid: 9e3c38bc26a977b4cbae420fb4018587, type: 3}
+  <canUse>k__BackingField: 1
+  <cost>k__BackingField: 10
+  <moneyType>k__BackingField: 1
+  <itemVisual>k__BackingField: {fileID: 8205975098651904504, guid: 9b7d243f18a7519438d5249e3fe6f632, type: 3}
+  <weight>k__BackingField: 7

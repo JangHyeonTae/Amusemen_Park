@@ -67,7 +67,7 @@ public class PressFObj : MonoBehaviour
     {
         if (Physics.OverlapSphere(transform.position, range, targetLayer).Length <= 0)
             return;
-        GameSystemManager.Instance.ChangeShopScene("ShopScene");
+        GameSystemManager.Instance.ChangeScene("ShopScene");
     }
     private void ShowShop(float range)
     {

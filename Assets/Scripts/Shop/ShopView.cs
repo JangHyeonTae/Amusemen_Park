@@ -33,7 +33,7 @@ public class ShopView : MonoBehaviour
         if (IsPass(InventoryManager.Instance.myNormalPoint))
         {
             player.transform.position = new Vector3(0, 0, 0);
-            GameSystemManager.Instance.ChangeShopScene("Map");
+            GameSystemManager.Instance.ChangeScene("Map");
         }
         else
         {

@@ -23,6 +23,16 @@ MonoBehaviour:
     m_SerializedLabels:
     - AudioClips
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4b63b61a7194716408ee021ab9acdaaa
+    m_Address: EndPos
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4effe4f4915e28f4c9c51f95c5b7aad2
+    m_Address: StartPos
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b9f738afadc4f394fa558a7eb6eecef4
     m_Address: ItemPanelPrefab
     m_ReadOnly: 0
