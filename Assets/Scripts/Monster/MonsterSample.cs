@@ -35,6 +35,7 @@ public class MonsterSample : PooledObject
 
     public void Init()
     {
+        vAnimator.isDead = false;
         target = FindObjectOfType<PlayerController>();
         animator = GetComponent<Animator>();
         vAnimator = GetComponent<vSimpleMeleeAI_Animator>();
@@ -186,8 +187,11 @@ public class MonsterSample : PooledObject
 
     private void Dead()
     {
+        if(vAnimator == null)
+            vAnimator = GetComponent<vSimpleMeleeAI_Animator>();
+
         vAnimator.isDead = true;
-        vAnimator.DeadAnimation();
+        //vAnimator.DeadAnimation();
     }
 
 

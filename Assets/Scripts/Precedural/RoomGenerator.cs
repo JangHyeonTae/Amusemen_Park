@@ -256,34 +256,30 @@ public class RoomGenerator : SampleMap
 
     protected void DestroyItem()
     {
-        for (int i = PoolManager.Instance.itemPool.poolParent.transform.childCount - 1; i >= 0; i--)
+        var itemPool = PoolManager.Instance?.itemPool;
+        var itemParent = itemPool?.poolParent?.transform;
+        if (itemParent != null)
         {
-            if (PoolManager.Instance.itemPool.poolParent.transform.childCount <= 0)
-                break;
-
-            var child = PoolManager.Instance.itemPool.poolParent.transform.GetChild(i).GetComponent<SampleItem>();
-
-            if (UnityEngine.Application.isPlaying)
+            for (int i = itemParent.childCount - 1; i >= 0; i--)
             {
-                child.Release();
+                var t = itemParent.GetChild(i);
+                var item = t.GetComponent<SampleItem>();
+                if (item == null) continue;     // ÇÙ½É: ¼¯ÀÎ ¾Öµé ½ºÅµ
+                item.Release();
             }
-            else
-                DestroyImmediate(child);
         }
 
-        for (int i = PoolManager.Instance.monsterPool.poolParent.transform.childCount - 1; i >= 0; i--)
+        var monsterPool = PoolManager.Instance?.monsterPool;
+        var monsterParent = monsterPool?.poolParent?.transform;
+        if (monsterParent != null)
         {
-            if (PoolManager.Instance.monsterPool.poolParent.transform.childCount <= 0)
-                break;
-
-            var child = PoolManager.Instance.monsterPool.poolParent.transform.GetChild(i).GetComponent<MonsterSample>();
-
-            if (UnityEngine.Application.isPlaying)
+            for (int i = monsterParent.childCount - 1; i >= 0; i--)
             {
-                child.Release();
+                var t = monsterParent.GetChild(i);
+                var m = t.GetComponent<MonsterSample>();
+                if (m == null) continue;
+                m.Release();
             }
-            else
-                DestroyImmediate(child);
         }
     }
 }
